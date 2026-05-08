@@ -1,0 +1,62 @@
+# 碰一下支付异常退款 — Phase 1 预期推断结果
+# 复杂 case：多端、状态机、AB实验、资金风险
+
+dimensions:
+  # --- 产品形态 ---
+  1_product_type:
+    expected: "H5页面"
+    reason: "订单详情页、退款申请页"
+
+  3_complexity:
+    expected: "中型"
+    reason: "3个模块：退款入口、退款流程、状态机"
+
+  4_compliance:
+    expected: "需要"
+    reason: "涉及退款/资金操作"
+
+  5_product_status:
+    expected: "v1.0"
+    reason: "全新退款功能"
+
+  # --- 内容结构 ---
+  9_state_machine:
+    expected: "需要"
+    reason: "已支付→退款申请中→退款审核中→退款成功/拒绝/申诉，≥5个状态"
+
+  # --- 流程与交互 ---
+  17_user_flow:
+    expected: "跳过"
+    reason: "单入口（订单详情页），虽有多触发条件但都在同一页面"
+
+  19_flow_chart:
+    expected: "需要"
+    reason: "6个顺序步骤，3个参与方（用户/商家/平台），有审核拒绝/超时等分支"
+
+  20_interaction:
+    expected: "复合交互"
+    reason: "退款申请有多步操作（选原因→提交→等审核），有异常分支"
+
+  # --- 工程与运营 ---
+  23_tracking:
+    expected: "需要"
+    reason: "方案中有退款成功率、申请率等指标"
+
+  25_ab_test:
+    expected: "需要"
+    reason: "方案中有入口位置 AB 实验"
+
+  # --- 补充推断 ---
+  29_pipeline:
+    expected: "多端"
+    reason: "用户端→商家端审核→平台介入，3方交互"
+
+  30_risk:
+    expected: "触发"
+    reason: "命中关键词：退款、大额（>500元人工审核）、审计"
+
+derived_charts:
+  sequence_diagram: true     # #29=多端
+  state_diagram: true        # #9=≥5状态
+  flow_chart: true           # #19=需要
+  architecture_diagram: false # #3=中型

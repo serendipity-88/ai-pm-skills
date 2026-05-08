@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>支付成功 - 推荐功能 Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alipay+Number:wght@500;700&family=PingFang+SC:wght@400;500;600&display=swap');
+    body { font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .amount { font-family: 'AlipayNumber', 'PingFang SC', sans-serif; }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .recommend-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- 顶部状态栏 -->
+  <div class="bg-white border-b border-gray-100 sticky top-0 z-10">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+      <button class="text-gray-400 hover:text-gray-600">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <span class="text-gray-600 text-sm">支付成功</span>
+      <button class="text-gray-400">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="max-w-md mx-auto px-4 py-8">
+    <!-- 支付成功状态 -->
+    <div class="text-center mb-8 fade-in">
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h1 class="text-2xl font-semibold text-gray-900 mb-2">支付成功</h1>
+      <p class="text-gray-500">商家：瑞幸咖啡（杭州西湖店）</p>
+    </div>
+
+    <!-- 支付金额 -->
+    <div class="bg-white rounded-2xl p-6 mb-4 shadow-sm fade-in">
+      <div class="text-center">
+        <p class="text-gray-500 text-sm mb-1">实付金额</p>
+        <p class="amount text-4xl font-bold text-gray-900">¥28.50</p>
+        <p class="text-gray-400 text-xs mt-2">支付方式：支付宝</p>
+      </div>
+    </div>
+
+    <!-- 订单详情（主要功能） -->
+    <div class="bg-white rounded-2xl p-4 mb-4 shadow-sm fade-in">
+      <div class="flex items-center justify-between cursor-pointer" onclick="toggleOrder()">
+        <span class="text-gray-900 font-medium">订单详情</span>
+        <svg class="w-4 h-4 text-gray-400 transform transition-transform" id="orderArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="hidden mt-3 space-y-2 text-sm" id="orderDetail">
+        <div class="flex justify-between text-gray-500">
+          <span>商品</span>
+          <span class="text-gray-900">生椰拿铁 × 1</span>
+        </div>
+        <div class="flex justify-between text-gray-500">
+          <span>订单号</span>
+          <span class="text-gray-900">2024041012345678</span>
+        </div>
+        <div class="flex justify-between text-gray-500">
+          <span>支付时间</span>
+          <span class="text-gray-900">2024-04-10 14:30</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 为你推荐（营销功能，优先级低） -->
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden fade-in" id="recommendSection">
+      <!-- 收起状态 -->
+      <div class="p-4 flex items-center justify-between cursor-pointer" onclick="toggleRecommend()">
+        <div class="flex items-center gap-2">
+          <span class="text-gray-900 font-medium">为你推荐</span>
+          <span class="text-xs bg-orange-50 text-orange-600 px-2 py-0.5 rounded-full">3 条优惠</span>
+        </div>
+        <div class="flex items-center gap-1 text-gray-400" id="toggleIcon">
+          <span class="text-sm">展开</span>
+          <svg class="w-4 h-4 transform transition-transform" id="arrowIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </div>
+
+      <!-- 展开内容 -->
+      <div class="hidden" id="recommendContent">
+        <div class="border-t border-gray-100 px-4 py-3 space-y-3" id="recommendList">
+          <!-- 推荐1：商家优惠券 -->
+          <div class="recommend-card p-3 bg-gradient-to-r from-orange-50 to-orange-100/50 rounded-xl cursor-pointer transition-all duration-200" onclick="handleClick(this, '领券')">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                <span class="text-2xl">🎫</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-gray-900 font-medium truncate">满30减5元券</p>
+                <p class="text-orange-600 text-sm">限当前商家 · 有效期7天</p>
+              </div>
+              <button class="text-orange-600 text-sm font-medium hover:text-orange-700">领券</button>
+            </div>
+          </div>
+
+          <!-- 推荐2：附近商家 -->
+          <div class="recommend-card p-3 bg-gray-50 rounded-xl cursor-pointer transition-all duration-200" onclick="handleClick(this, '查看')">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                <span class="text-2xl">📍</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-gray-900 font-medium truncate">附近商家·瑞幸咖啡</p>
+                <p class="text-gray-500 text-sm">距您 200m · 评分 4.8</p>
+              </div>
+              <button class="text-gray-500 text-sm">查看</button>
+            </div>
+          </div>
+
+          <!-- 推荐3：猜你喜欢 -->
+          <div class="recommend-card p-3 bg-gray-50 rounded-xl cursor-pointer transition-all duration-200" onclick="handleClick(this, '看看')">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                <span class="text-2xl">☕</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-gray-900 font-medium truncate">每周一杯·免费喝</p>
+                <p class="text-gray-500 text-sm">开通会员享专属权益</p>
+              </div>
+              <button class="text-gray-500 text-sm">看看</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部操作 -->
+        <div class="border-t border-gray-100 px-4 py-3 flex items-center justify-between">
+          <button class="text-gray-400 text-sm flex items-center gap-1 hover:text-gray-600" onclick="hideRecommend()">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <span>不感兴趣</span>
+          </button>
+          <span class="text-gray-300 text-xs">广告</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部操作 -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 safe-area-inset-bottom">
+      <div class="max-w-md mx-auto flex gap-3">
+        <button class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-medium hover:bg-gray-200 transition">查看订单</button>
+        <button class="flex-1 py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition">返回首页</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast 提示 -->
+  <div id="toast" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900/80 text-white px-6 py-3 rounded-xl text-sm opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+    已隐藏推荐
+  </div>
+
+  <script>
+    let isRecommendExpanded = false;
+
+    function toggleRecommend() {
+      const content = document.getElementById('recommendContent');
+      const arrow = document.getElementById('arrowIcon');
+      const toggleText = document.querySelector('#toggleIcon span');
+
+      isRecommendExpanded = !isRecommendExpanded;
+
+      if (isRecommendExpanded) {
+        content.classList.remove('hidden');
+        arrow.classList.add('rotate-180');
+        toggleText.textContent = '收起';
+      } else {
+        content.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
+        toggleText.textContent = '展开';
+      }
+    }
+
+    function hideRecommend() {
+      const section = document.getElementById('recommendSection');
+      section.style.display = 'none';
+
+      // 显示 toast
+      const toast = document.getElementById('toast');
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 1500);
+    }
+
+    function handleClick(element, action) {
+      // 点击反馈动画
+      element.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        element.style.transform = '';
+      }, 100);
+
+      console.log('点击了推荐项:', action);
+    }
+
+    function toggleOrder() {
+      const detail = document.getElementById('orderDetail');
+      const arrow = document.getElementById('orderArrow');
+
+      detail.classList.toggle('hidden');
+      arrow.classList.toggle('rotate-180');
+    }
+
+    // 模拟数据统计
+    console.log('推荐曝光 +1');
+  </script>
+</body>
+</html>

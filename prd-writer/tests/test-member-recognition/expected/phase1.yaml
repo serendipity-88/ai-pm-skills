@@ -1,0 +1,75 @@
+# 碰一下会员识别 — Phase 1 预期推断结果
+# 只列关键维度，未列出的表示"不关心，任何合理值都可接受"
+
+dimensions:
+  # --- 产品形态 ---
+  1_product_type:
+    expected: "H5页面"
+    reason: "方案中明确是 H5 页面，Demo 是 index.html"
+
+  3_complexity:
+    expected: "中型"
+    reason: "4个模块：会员识别页、权益确认弹窗、会员识别链路、配置化设计"
+
+  5_product_status:
+    expected: "v1.0"
+    reason: "全新功能，无线上版本"
+
+  6_roles:
+    expected: "不需要"
+    reason: "单角色（支付用户），商家侧是配置不是使用"
+
+  # --- 内容结构 ---
+  9_state_machine:
+    expected: "需要"
+    reason: "识别中→已识别→权益匹配，加上超时/失败，≥3个互相可达状态"
+
+  15_comparison:
+    expected: "跳过"
+    reason: "无多方案比选"
+
+  16_glossary:
+    expected: "跳过"
+    reason: "碰一下/NFC/会员 均为行业通用术语"
+
+  # --- 流程与交互 ---
+  17_user_flow:
+    expected: "跳过"
+    reason: "单入口（碰手机触发），不存在多入口导向不同页面"
+
+  19_flow_chart:
+    expected: "需要"
+    reason: "正常链路5+步骤，3个参与方（用户/设备/服务端），有条件分支（会员/非会员）"
+
+  20_interaction:
+    expected: "复合交互"
+    reason: "权益确认弹窗有3种变体，每种有主按钮/次按钮/降级逻辑"
+
+  # --- 工程与运营 ---
+  23_tracking:
+    expected: "需要"
+    reason: "方案中有完整的数据度量章节，含埋点指标"
+
+  25_ab_test:
+    expected: "需要"
+    reason: "方案中明确 AB 实验设计（实验组A/B + 对照组）"
+
+  26_scope_exclusion:
+    expected: "有"
+    reason: "方案7.不做的事情明确列出4项排除"
+
+  # --- 补充推断 ---
+  29_pipeline:
+    expected: "多端"
+    reason: "用户侧H5 + 设备侧NFC + 服务端，3端交互"
+
+  30_risk:
+    expected: "触发"
+    reason: "命中关键词：支付（支付链路）、身份信息（会员身份识别）"
+
+# --- 图表衍生规则预期 ---
+derived_charts:
+  sequence_diagram: true     # #29=多端 → 时序图
+  state_diagram: true        # #9=≥3状态 → 状态机图
+  flow_chart: true           # #19=需要 → 流程图
+  architecture_diagram: false # #3=中型，不触发架构图

@@ -1,0 +1,62 @@
+# 支付结果页推荐 — Phase 1 预期推断结果
+# 轻量 case：单页面、简单交互、无复杂链路
+
+dimensions:
+  # --- 产品形态 ---
+  1_product_type:
+    expected: "H5页面"
+    reason: "支付结果页 H5，有 Demo index.html"
+
+  3_complexity:
+    expected: "轻量"
+    reason: "1个模块（推荐区），无跨模块数据流"
+
+  5_product_status:
+    expected: "迭代"
+    reason: "在已有支付结果页上新增功能"
+
+  # --- 内容结构 ---
+  9_state_machine:
+    expected: "跳过"
+    reason: "推荐区仅收起/展开2个状态"
+
+  16_glossary:
+    expected: "跳过"
+    reason: "无专有术语"
+
+  # --- 流程与交互 ---
+  17_user_flow:
+    expected: "跳过"
+    reason: "单入口（支付成功后自动到达）"
+
+  19_flow_chart:
+    expected: "跳过"
+    reason: "单页面交互，无多步骤串联，无条件分支（展开/收起不算分支）"
+
+  20_interaction:
+    expected: "简单交互"
+    reason: "点击展开→看推荐→点击跳转，无多状态切换、无降级逻辑"
+
+  # --- 工程与运营 ---
+  23_tracking:
+    expected: "需要"
+    reason: "方案中有曝光pv/uv、点击率等指标"
+
+  25_ab_test:
+    expected: "跳过"
+    reason: "方案中无 AB 实验设计"
+
+  # --- 补充推断 ---
+  29_pipeline:
+    expected: "跳过"
+    reason: "纯前端页面展示，推荐数据由接口下发但不涉及多端交互链路"
+
+  30_risk:
+    expected: "跳过"
+    reason: "未命中任何风险关键词，纯展示功能"
+
+derived_charts:
+  sequence_diagram: false
+  state_diagram: false
+  flow_chart: false
+  architecture_diagram: false

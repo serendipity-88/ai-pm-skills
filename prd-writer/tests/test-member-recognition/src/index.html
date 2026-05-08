@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>碰一下会员识别 - Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div id="app" class="max-w-[375px] mx-auto bg-white min-h-screen relative">
+    <!-- 顶部状态栏 -->
+    <div class="bg-blue-600 text-white px-4 py-3">
+      <div class="flex items-center gap-2">
+        <div id="status-icon" class="w-5 h-5 border-2 border-white rounded-full animate-spin border-t-transparent"></div>
+        <span id="status-text" class="text-sm">会员识别中...</span>
+      </div>
+      <div class="mt-2 h-1 bg-blue-400 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-white rounded-full transition-all duration-500" style="width: 30%"></div>
+      </div>
+    </div>
+
+    <!-- 会员信息区 -->
+    <div id="member-info" class="p-4 border-b hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold">金卡会员</span>
+          <span class="ml-2 text-sm text-gray-500">积分: 2,580</span>
+        </div>
+        <div class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Lv.3</div>
+      </div>
+    </div>
+
+    <!-- 权益推荐区 -->
+    <div id="benefit-area" class="p-4 hidden">
+      <div class="text-sm text-gray-500 mb-2">本单可用权益</div>
+      <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-red-600 font-bold text-lg">¥5.00</span>
+            <span class="text-sm text-gray-600 ml-1">满20可用</span>
+          </div>
+          <div class="text-xs text-gray-400">有效期至 2026-05-01</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 非会员状态 -->
+    <div id="non-member" class="p-4 text-center hidden">
+      <div class="text-gray-400 text-sm mb-4">您还不是该商家会员</div>
+      <button class="bg-blue-600 text-white px-6 py-2 rounded-full text-sm" onclick="showJoinDialog()">一键开通</button>
+    </div>
+
+    <!-- 权益确认弹窗 -->
+    <div id="benefit-dialog" class="fixed inset-0 bg-black/50 flex items-end justify-center hidden">
+      <div class="bg-white w-full max-w-[375px] rounded-t-2xl p-6">
+        <h3 id="dialog-title" class="text-lg font-bold text-center">本单可使用会员优惠</h3>
+        <p id="dialog-subtitle" class="text-center text-gray-500 mt-2">已为您匹配 <span class="text-red-600 font-bold">¥5.00</span> 优惠券</p>
+        <div class="mt-6 space-y-3">
+          <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium" onclick="useBenefit()">使用优惠并支付</button>
+          <button class="w-full text-gray-500 py-2 text-sm" onclick="skipBenefit()">不使用，直接支付</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 降级状态 -->
+    <div id="fallback" class="p-4 text-center hidden">
+      <div class="text-gray-400 text-sm">会员信息获取中，不影响支付</div>
+    </div>
+  </div>
+
+  <script>
+    // 模拟会员识别流程
+    const TIMEOUT_MS = 3000;
+
+    function simulateRecognition() {
+      const progressBar = document.getElementById('progress-bar');
+      const statusText = document.getElementById('status-text');
+
+      // 模拟进度
+      setTimeout(() => { progressBar.style.width = '60%'; }, 500);
+      setTimeout(() => { progressBar.style.width = '100%'; }, 1200);
+
+      setTimeout(() => {
+        statusText.textContent = '已识别 · 权益匹配中';
+        document.getElementById('member-info').classList.remove('hidden');
+      }, 1500);
+
+      setTimeout(() => {
+        statusText.textContent = '已识别 · 1项权益可用';
+        document.getElementById('benefit-area').classList.remove('hidden');
+        document.getElementById('benefit-dialog').classList.remove('hidden');
+      }, 2000);
+    }
+
+    function useBenefit() {
+      document.getElementById('benefit-dialog').classList.add('hidden');
+      alert('优惠券已核销，进入支付流程');
+    }
+
+    function skipBenefit() {
+      document.getElementById('benefit-dialog').classList.add('hidden');
+      alert('已跳过权益，进入支付流程');
+    }
+
+    function showJoinDialog() {
+      alert('跳转会员开通页面');
+    }
+
+    // 页面加载后启动识别
+    window.onload = simulateRecognition;
+  </script>
+</body>
+</html>

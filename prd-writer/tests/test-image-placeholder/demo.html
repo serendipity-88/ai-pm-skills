@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>会议室预订 Demo</title>
+</head>
+<body>
+    <!-- 主界面：5 个会议室 × 16 个时段网格 -->
+    <div id="main-view">
+        <h1>会议室预订</h1>
+        <div class="room-grid">
+            <!-- 5 个会议室，每个 16 个时段 -->
+            <div class="room-row" data-room="会议室 A">
+                <div class="time-slot" data-status="free">09:00</div>
+                <div class="time-slot" data-status="booked">10:00</div>
+                <div class="time-slot" data-status="free">11:00</div>
+                <!-- ... 更多时段 -->
+            </div>
+            <!-- 会议室 B-E -->
+        </div>
+    </div>
+
+    <!-- 预订确认浮层（点击空闲格子后弹出） -->
+    <div id="booking-modal" style="display:none">
+        <h2>确认预订</h2>
+        <p>会议室：会议室 A</p>
+        <p>时间：今天 11:00-12:00</p>
+        <button id="confirm">确认</button>
+        <button id="cancel">取消</button>
+    </div>
+
+    <!-- 预订成功状态 -->
+    <div id="success-state" style="display:none">
+        <p>预订成功！</p>
+    </div>
+</body>
+</html>
