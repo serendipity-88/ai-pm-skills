@@ -43,22 +43,31 @@ AI Native PD     → PRD Writer (Phase 4 调用)
 
 ## 安装
 
-将对应 skill 目录复制到 Claude Code 的 skills 安装目录：
+每个 skill 目录下有 `publish.sh`，运行后会自动复制到 Claude Code 的三个 skills 安装目录：
 
 ```bash
 # 安装全部三个
-cp -r pd-deep-research/ ~/.claude/skills/
-cp -r ai-native-pd/ ~/.claude/skills/
-cp -r prd-writer/ ~/.claude/skills/
+bash pd-deep-research/publish.sh
+bash ai-native-pd/publish.sh
+bash prd-writer/publish.sh
 
 # 或只安装需要的
-cp -r pd-deep-research/ ~/.claude/skills/
+bash pd-deep-research/publish.sh
 ```
 
-**可选增强**（不安装不影响核心功能）：
-- [drawio](https://github.com/nicholaschuayunzhi/drawio-mcp-server) — 流程图/架构图增强
-- [architecture-diagram](https://github.com/nicholaschuayunzhi/architecture-diagram-mcp) — 大型架构图
-- [Fireworks Tech Graph](https://github.com/nicholaschuayunzhi/fireworks-tech-graph-mcp) — 高保真技术图表
+**手动安装**：将 `skill/` 子目录的内容复制到 skills 安装目录（注意是 `skill/` 不是项目根目录）：
+
+```bash
+# 例如安装 pd-deep-research
+mkdir -p ~/.claude/skills/pd-deep-research
+cp -r pd-deep-research/skill/* ~/.claude/skills/pd-deep-research/
+```
+
+**可选增强**（MCP server，不安装不影响核心功能）：
+- [drawio](https://github.com/jgraph/drawio-mcp) — 流程图/架构图增强（官方 draw.io MCP server）
+- [Fireworks Tech Graph](https://github.com/yizhiyanhua-ai/fireworks-tech-graph) — 高保真技术图表（SVG+PNG）
+
+> MCP server 需要通过 `npm install` + 配置 `settings.json` 安装，不能直接复制到 skills 目录。详见各项目 README。
 
 ## 目录结构
 
