@@ -65,6 +65,7 @@ cp -r pd-deep-research/skill/* ~/.claude/skills/pd-deep-research/
 
 **可选增强**（MCP server，不安装不影响核心功能）：
 - [drawio](https://github.com/jgraph/drawio-mcp) — 流程图/架构图增强（官方 draw.io MCP server）
+- [architecture-diagram](https://github.com/Cocoon-AI/architecture-diagram-generator) — 大型架构图
 - [Fireworks Tech Graph](https://github.com/yizhiyanhua-ai/fireworks-tech-graph) — 高保真技术图表（SVG+PNG）
 
 > MCP server 需要通过 `npm install` + 配置 `settings.json` 安装，不能直接复制到 skills 目录。详见各项目 README。
