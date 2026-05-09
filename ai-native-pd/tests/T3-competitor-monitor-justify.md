@@ -32,7 +32,7 @@
   - 核心差异
   - 迁移/替代成本
 - 应标注"待用户校验"的关键事实
-- 应生成 `assets/competitive-analysis.md`（内容比正常模式更详细）
+- 应生成 `assets/research-findings.md`（内容比正常模式更详细）
 
 ### Phase 1c 调研摘要
 - 应呈现完整调研结果，包括：

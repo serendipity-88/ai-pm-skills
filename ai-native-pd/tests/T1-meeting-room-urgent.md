@@ -23,7 +23,7 @@
   - 目标：简化预订流程
   - 用户：内部员工
 - 应生成 `assets/requirement-assessment.md`（精简版）
-- 不应生成 `assets/competitive-analysis.md`
+- 不应生成 `assets/research-findings.md`
 
 ### Phase 3
 - 应检测已安装的相关 skill 并推荐

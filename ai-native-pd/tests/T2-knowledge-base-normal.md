@@ -30,7 +30,7 @@
 - 应搜索到相关竞品（如 Glean、Guru、Elastic Workplace Search、Algolia 等）
 - 每个竞品应有结构化对比：怎么解决同样问题、核心差异、迁移成本
 - 关键事实（定价、上线时间）应标注"待用户校验"
-- 应生成 `assets/competitive-analysis.md`
+- 应生成 `assets/research-findings.md`
 
 ### Phase 1c 调研摘要
 - 应一次性呈现：JTBD、需求类型、竞品现状、风险提示
