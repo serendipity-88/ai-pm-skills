@@ -66,7 +66,15 @@ mkdir -p ~/.claude/skills/pd-deep-research
 cp -r pd-deep-research/skill/* ~/.claude/skills/pd-deep-research/
 ```
 
-**可选增强**（MCP server，不安装不影响核心功能）：
+**可选增强**：
+
+UI Skill（Phase 3 Design 步骤调用，不安装则使用默认样式）：
+- [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) — 设计系统生成（默认调用）
+- [huashu-design](https://github.com/alchaincyf/huashu-design) — HTML 高保真原型 + 品牌规范
+- frontend-design — distinctive 前端界面（Claude Code 内置 example skill，无需安装）
+- alipay-design — 支付宝设计规范代码模板（仅做支付宝产品时使用）
+
+MCP Server（不安装不影响核心功能）：
 - [drawio](https://github.com/jgraph/drawio-mcp) — 流程图/架构图增强（官方 draw.io MCP server）
 - [architecture-diagram](https://github.com/Cocoon-AI/architecture-diagram-generator) — 大型架构图
 - [Fireworks Tech Graph](https://github.com/yizhiyanhua-ai/fireworks-tech-graph) — 高保真技术图表（SVG+PNG）
