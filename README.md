@@ -20,7 +20,7 @@
 **核心流程**：
 - Phase 1：想法澄清 + 市场研究（调用 PD Deep Research）
 - Phase 2：产品设计 + 原型开发
-- Phase 3：开发规划 + Skill 发现
+- Phase 3：设计先行 + 代码开发（Design 步骤默认调用 ui-ux-pro-max，扫描发现其他 UI skill 时提示用户选择）
 - Phase 4：PRD 输出（调用 PRD Writer）
 
 ### 3. PRD Writer — 结构化 PRD 生成
@@ -36,10 +36,13 @@
 
 ```
 PD Deep Research ← AI Native PD (Phase 1b 调用)
+UI Skills        ← AI Native PD (Phase 3 Design 步骤调用)
 AI Native PD     → PRD Writer (Phase 4 调用)
 ```
 
 三个 Skill 可以独立使用，也可以串联完成从"我有个想法"到"可交付的 PRD"的全流程。
+
+**Phase 3 UI Skill 联动**：Build 步骤拆为 Design → Code，Design 步骤默认调用 ui-ux-pro-max 生成设计系统，扫描发现 huashu-design / alipay-design / frontend-design 时提示用户选择是否追加。
 
 ## 安装
 

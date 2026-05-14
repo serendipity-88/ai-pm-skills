@@ -139,19 +139,31 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 
 ### Build
 
-开始 coding 前，自动发现可用的辅助能力：
+**设计先行**：写代码前先确定设计方向和规范。
 
-1. **扫描已安装 skill**：检查是否有与当前项目相关的 skill（UI/UX 设计、平台设计规范、开发计划管理等）
-2. **扫描已连接 MCP 工具**：检查是否有 Pencil、Stitch 等设计工具可用
-3. **向用户推荐**："检测到你安装了 [skill 名称列表]，要在开发中应用吗？"
-4. 用户确认后，将选中 skill 的约束注入开发上下文
+1. **Design**（设计步骤）：
+   - 默认调用 **ui-ux-pro-max**，传入产品简报 + 技术栈偏好，产出 `assets/design-system/MASTER.md`（设计系统 + 技术栈实现指南）
+   - 扫描其他已安装 UI skill，向用户提示发现：
+     > 检测到你还安装了以下 UI skill，需要一起用吗？
+     > | Skill | 能做什么 |
+     > |-------|---------|
+     > | huashu-design | HTML 高保真原型 + 品牌规范 |
+     > | alipay-design | 支付宝设计规范代码模板 |
+     > | frontend-design | distinctive 前端界面 |
+     >
+     > 输入 skill 名称追加，不需要则跳过。
+   - 用户选择后调用对应 skill，产出写入项目目录：
+     - huashu-design → `assets/brand-spec.md`（品牌规范）+ HTML 高保真原型
+     - alipay-design → 符合支付宝规范的代码模板
+     - frontend-design → 前端界面代码
 
-> 不维护硬编码的 skill 协作列表。用户装了什么、连了什么 MCP，Phase 3 就能发现什么。
+2. **Code**（编码步骤）：
+   - 基于 Design 步骤的设计产出写 Demo 代码
+   - 未调用 UI skill 时（急用路径或 skill 不可用），使用默认样式
+   - 开发原则：MVP 思维，先跑通核心流程
+   - 部署方式根据用户条件选择（Vercel / 本地运行 + 截图）
 
-开发原则：
-- 基于 Phase 2 产品简报（或急用路径的 3 个核心问题）
-- MVP 思维，先跑通核心流程
-- 部署方式根据用户条件选择（Vercel / 本地运行 + 截图）
+> 急用路径跳过 Design 步骤，直接 Code。
 
 ### Iterate
 
@@ -211,6 +223,8 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 | Phase 1 | `assets/research-findings.md` | 调研发现摘要（从 pd-deep-research 决策简报提取，急用路径无） |
 | Phase 1 | `assets/pd-deep-research/research-report.md` | 深度研究完整报告（急用路径无） |
 | Phase 2 | `assets/product-brief.md` | 一页纸产品简报（急用路径无） |
+| Phase 3 | `assets/design-system/MASTER.md` | 设计系统（Design 步骤产出，ui-ux-pro-max，急用路径无） |
+| Phase 3 | `assets/brand-spec.md` | 品牌规范（Design 步骤产出，huashu-design，急用路径无） |
 | Phase 3 | `prototype/screenshots/` | Demo 关键界面截图 |
 | Phase 3 | `src/` 或项目代码目录 | Demo 代码 |
 | Phase 4 | `prd/PRD_{项目名}_v1.0.md` | PRD（由 prd-writer 生成，文件名含项目名） |
@@ -230,7 +244,8 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 ## 协作
 
 - 需求模糊时调用 brainstorming skill 理清思路
+- Phase 1b 调用 pd-deep-research skill 做竞品与现状调研
+- Phase 3 Build Design 步骤默认调用 ui-ux-pro-max，扫描发现其他已安装 UI skill（huashu-design、alipay-design、frontend-design）时提示用户选择
 - Phase 4 调用 prd-writer skill 生成 PRD
-- Phase 3 Build 时自动发现已安装的相关 skill（UI/UX、平台规范等）并推荐
 - 图表生成：drawio（流程图、对比图、ER 图）、architecture-diagram（大型架构图、系统拓扑图）
 - 遇到失败场景（开发失败、需求变更、部署受限）时参考 `references/failure-handling.md`
