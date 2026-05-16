@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>互联网产品设计文案规范——大厂成熟规范、方法论与跨赛道差异</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --border: #e5e5e5;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --tag-high: #dcfce7;
+    --tag-high-text: #166534;
+    --tag-medium: #fef9c3;
+    --tag-medium-text: #854d0e;
+    --tag-unverified: #fce7f3;
+    --tag-unverified-text: #9d174d;
+    --opportunity-bg: #f0fdf4;
+    --risk-bg: #fef2f2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text);
+    background: var(--bg);
+    padding: 48px 64px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+  h2 { font-size: 22px; font-weight: 700; margin-top: 80px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 600; margin-top: 40px; margin-bottom: 12px; }
+  h4 { font-size: 16px; font-weight: 600; margin-top: 24px; margin-bottom: 8px; }
+
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 8px 16px;
+    margin: 16px 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    background: var(--accent-light);
+    border-radius: 0 6px 6px 0;
+  }
+
+  p { margin: 10px 0; }
+
+  strong { font-weight: 700; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+    table-layout: auto;
+  }
+
+  th {
+    background: #f8f9fa;
+    font-weight: 600;
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    vertical-align: top;
+  }
+
+  tr:hover td { background: #fafbfc; }
+
+  .decision-table { table-layout: fixed; }
+  .decision-table th:nth-child(1) { width: 13%; }
+  .decision-table th:nth-child(2) { width: 27%; }
+  .decision-table th:nth-child(3) { width: 9%; }
+  .decision-table th:nth-child(4) { width: 51%; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .tag-high { background: var(--tag-high); color: var(--tag-high-text); }
+  .tag-medium { background: var(--tag-medium); color: var(--tag-medium-text); }
+  .tag-unverified { background: var(--tag-unverified); color: var(--tag-unverified-text); }
+
+  .opportunity:hover td { background: var(--opportunity-bg); }
+  .risk:hover td { background: var(--risk-bg); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  .meta { font-size: 14px; color: var(--text-secondary); margin: 20px 0; line-height: 1.8; }
+  .meta strong { color: var(--text); }
+
+  .nav-layer {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .nav-layer-1 { background: #dbeafe; color: #1e40af; }
+  .nav-layer-2 { background: #fef3c7; color: #92400e; }
+  .nav-layer-3 { background: #f3e8ff; color: #6b21a8; }
+
+  .layer-divider {
+    text-align: center;
+    margin: 60px 0 40px;
+    position: relative;
+  }
+  .layer-divider::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 1px;
+    background: var(--border);
+  }
+  .layer-divider span {
+    position: relative;
+    background: var(--bg);
+    padding: 0 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  ol, ul { margin: 10px 0 10px 24px; }
+  li { margin: 4px 0; }
+
+  code { background: #f1f5f9; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+
+  .summary-bar {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .summary-item {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .summary-high { background: var(--tag-high); color: var(--tag-high-text); }
+  .summary-medium { background: var(--tag-medium); color: var(--tag-medium-text); }
+  .summary-unverified { background: var(--tag-unverified); color: var(--tag-unverified-text); }
+
+  .footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 40px 24px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 18px; margin-top: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>互联网产品设计文案规范——大厂成熟规范、方法论与跨赛道差异</h1>
+
+<div class="meta">
+  <strong>研究完成时间</strong>：2026-05-14<br>
+  <strong>研究范围</strong>：大厂产品文案设计规范、UI 组件文案规则、广告法合规、跨赛道差异、AI 文案工具
+</div>
+
+<div class="summary-bar">
+  <span class="summary-item summary-high">8 条高置信发现</span>
+  <span class="summary-item summary-medium">6 条中等置信洞察</span>
+  <span class="summary-item summary-unverified">4 条待验证假设</span>
+</div>
+
+<hr>
+
+<div class="layer-divider"><span><span class="nav-layer nav-layer-1">第一层</span> 决策简报</span></div>
+
+<blockquote>如果只读这一部分，就够了。</blockquote>
+
+<h2 id="layer1-conclusion">一句话结论</h2>
+
+<p><strong>大厂文案规范高度趋同（清晰、简洁、用户视角），但都缺少"按组件类型给字数硬约束+按赛道调语调"的实操层——这正是 skill 的差异化机会。</strong></p>
+
+<h2 id="layer1-decisions">关键决策</h2>
+
+<table class="decision-table">
+<thead>
+<tr><th>需要做的决策</th><th>推荐方向</th><th>置信度</th><th>理由链</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>skill 核心框架</td>
+  <td><strong>以 UI 组件为索引、字数硬约束为骨架、语调簇为调参层</strong></td>
+  <td><span class="tag tag-high">高</span></td>
+  <td>6 家规范全部以原则为主，无一家按组件给字数上限；用户写文案时第一约束是"这个按钮能放几个字"，不是"我该遵循什么原则"</td>
+</tr>
+<tr>
+  <td>赛道分层方式</td>
+  <td><strong>两簇（增长转化 / 效能工具）+ 合规底线</strong></td>
+  <td><span class="tag tag-high">高</span></td>
+  <td>Ant Design（效能工具）vs 支付宝/QQ Design（增长转化）的语调差异验证了双簇分法；广告法是所有赛道的硬底线，不是某赛道特征</td>
+</tr>
+<tr>
+  <td>合规策略</td>
+  <td><strong>广告法极限词检测作为必经关卡，非可选</strong></td>
+  <td><span class="tag tag-high">高</span></td>
+  <td>广告法第 9 条违者 20-100 万罚款[S1]，极限词列表已非常明确[S2]；UI 文案中的 Banner/推送/营销弹窗是重灾区</td>
+</tr>
+<tr>
+  <td>文案生成 vs 审查</td>
+  <td><strong>生成+审查双模式</strong></td>
+  <td><span class="tag tag-high">高</span></td>
+  <td>Semi Design 和 Ant Design 的规范天然适合做审查规则；Apple HIG 的 do/don't 模式可直接转化为正反例</td>
+</tr>
+<tr>
+  <td>与现有 UI skill 的关系</td>
+  <td><strong>独立 skill，可被 ai-native-pd 调用</strong></td>
+  <td><span class="tag tag-medium">中</span></td>
+  <td>文案是产品决策的下游，但比 UI 设计更轻量；独立运行时也能服务运营/设计师，不限于 PM 流程</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="layer1-opportunities">机会窗口</h2>
+
+<table>
+<thead>
+<tr><th>机会</th><th>依据</th><th>潜力评估</th></tr>
+</thead>
+<tbody>
+<tr class="opportunity">
+  <td>组件级字数硬约束</td>
+  <td>6 家规范无一提供，Apple HIG 有零散建议（按钮~20字符）但未系统化；用户写文案时最直接的需求是"这个位置能放几个字"</td>
+  <td><strong>高</strong>——这是所有规范的最大空白</td>
+</tr>
+<tr class="opportunity">
+  <td>语调簇调参</td>
+  <td>Semi Design 的 5 级语调框架是现有最细的语调分层，但未与赛道关联；增长转化簇天然偏"庆祝+有帮助"，效能工具簇偏"中性+权威"</td>
+  <td><strong>中</strong>——框架已有，赛道映射是新增</td>
+</tr>
+<tr class="opportunity">
+  <td>中文文案规范 skill</td>
+  <td>已有规范全是英文为主，中文场景的标点/用词/敬语规则只有 Ant Design 和 QQ Design 覆盖，且不完整</td>
+  <td><strong>高</strong>——中文互联网产品缺乏可执行的文案 skill</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="layer1-risks">风险与待确认</h2>
+
+<table>
+<thead>
+<tr><th>风险与待确认</th><th>类型</th><th>影响</th><th>建议</th><th>时限</th></tr>
+</thead>
+<tbody>
+<tr class="risk">
+  <td>组件字数限制缺乏权威来源，需自行推算</td>
+  <td>待确认</td>
+  <td>高</td>
+  <td>从各平台设计规范中提取组件尺寸，反推字数上限；用 A/B 测试数据校验</td>
+  <td>设计前</td>
+</tr>
+<tr class="risk">
+  <td>赛道语调差异可能不是二元而是光谱</td>
+  <td>待确认</td>
+  <td>中</td>
+  <td>先按两簇 MVP，后续根据用户反馈细化为 3-4 级</td>
+  <td>MVP 后</td>
+</tr>
+<tr class="risk">
+  <td>广告法合规只覆盖中国大陆</td>
+  <td>风险</td>
+  <td>中</td>
+  <td>skill 明确标注适用范围为中国大陆产品；海外版本需替换为当地法规</td>
+  <td>设计中</td>
+</tr>
+<tr class="risk">
+  <td>AI 生成文案可能产出广告法违禁词</td>
+  <td>风险</td>
+  <td>高</td>
+  <td>内置极限词检测清单作为生成后必检步骤</td>
+  <td>设计中</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="layer1-handoff">需求衔接</h2>
+
+<blockquote>决定推进后，从这里开始写需求。</blockquote>
+
+<table>
+<thead>
+<tr><th>维度</th><th>结论</th></tr>
+</thead>
+<tbody>
+<tr><td>为谁解决什么问题</td><td>互联网产品 PM/设计师/开发者，需要为不同 UI 组件写出合规、精准、符合赛道调性的产品文案</td></tr>
+<tr><td>产品定位</td><td>以 UI 组件为索引的文案专家——不是通用写作工具，是"告诉我这是哪个组件、什么赛道，我给你对的文案"</td></tr>
+<tr><td>边界和约束</td><td><strong>必须满足</strong>：广告法合规检测 / 组件字数硬约束 / 中文用词规范<br><strong>明确不做</strong>：长篇内容写作（公众号/博客）/ 纯品牌 Slogan 创意（无 UI 上下文）/ 英文文案</td></tr>
+<tr><td>怎么算成功</td><td>用户拿到文案后不需要再查规范确认合规性；组件文案 90%+ 一次通过字数限制</td></tr>
+<tr><td>下一步行动</td><td>1. 按组件维度整理字数硬约束表（2天内）；2. 设计语调簇调参规则（1天内）；3. 编写广告法极限词检测清单（1天内）</td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<div class="layer-divider"><span><span class="nav-layer nav-layer-2">第二层</span> 决策推理</span></div>
+
+<blockquote>理解"为什么"做出这些推荐。</blockquote>
+
+<h2 id="layer2-reasoning">决策推理</h2>
+
+<h3>决策 1：以 UI 组件为索引、字数硬约束为骨架</h3>
+
+<p><strong>推荐方向</strong>：组件索引 + 字数硬约束<br>
+<strong>置信度</strong>：<span class="tag tag-high">高</span></p>
+
+<h4>推理链：</h4>
+<ol>
+<li><strong>发现</strong>：6 家规范（Ant Design[S3]、Semi Design[S4]、支付宝[S5]、微信[S6]、QQ Design[S7]、Apple HIG[S8]）全部以原则为主——"清晰、简洁、用户视角"——但无一家按组件给字数上限。Apple HIG 零散提到"按钮~20字符、标题3-5词"，<strong>是唯一有字数建议的</strong>，但未系统化</li>
+<li><strong>推断</strong>：用户写文案时的第一约束不是"我该遵循什么原则"，而是<strong>"这个按钮能放几个字"</strong>。原则是理论层，字数是实操层。现有规范全部停在理论层</li>
+<li><strong>结论</strong>：skill 以组件为索引（按钮/标题/Toast/表单...），每个组件配字数硬约束，用户查的是"按钮文案→2-8字"，不是"清晰简洁"</li>
+</ol>
+
+<p><strong>反对意见</strong>：为什么不用赛道为索引？因为同一赛道内，按钮和弹窗的字数限制完全不同——跨赛道的语调差异是调参层，不是索引层。</p>
+
+<hr>
+
+<h3>决策 2：两簇语调 + 合规底线</h3>
+
+<p><strong>推荐方向</strong>：增长转化簇 / 效能工具簇 + 广告法硬底线<br>
+<strong>置信度</strong>：<span class="tag tag-high">高</span></p>
+
+<h4>推理链：</h4>
+<ol>
+<li><strong>发现</strong>：Ant Design 定位"中台设计语言"，语调偏中性权威[S3]；支付宝和 QQ Design 面向 C 端，语调偏友好鼓励[S5][S7]；Semi Design 的 5 级语调框架（中性/庆祝/同情/有帮助/权威）是现有最细的语调分层[S4]</li>
+<li><strong>推断</strong>：语调差异的本质是<strong>用户心智模型差异</strong>——增长转化类用户在决策焦虑中，需要"庆祝+有帮助"降低犹豫；效能工具类用户在执行任务中，需要"中性+权威"减少干扰。这不是连续光谱，而是两个明显的聚类</li>
+<li><strong>结论</strong>：两簇 MVP 够用，后续可细化为 3-4 级</li>
+</ol>
+
+<p><strong>反对意见</strong>：社区和内容平台算哪簇？——算增长转化簇，因为核心行为（发帖/互动/消费内容）都是决策驱动，需要降低行动门槛。</p>
+
+<hr>
+
+<h2 id="layer2-evolution">行业演变分析</h2>
+
+<p>产品文案规范从"没人管"到"设计系统的一部分"，经历了三个阶段：</p>
+
+<p><strong>第一阶段（2015 前）：文案是设计的附属品。</strong> 没有专门的 UX Writer 角色，文案由设计师或 PM 随手写。支付宝 AUX 团队 2016 年出版《支付宝体验设计精髓》[S5]，是中文世界最早系统讨论产品文案的著作之一，但重心仍在交互和视觉。</p>
+
+<p><strong>第二阶段（2015-2020）：设计系统崛起，文案开始有规范。</strong> Google Material Design 2014 年发布，含 Writing 章节[S9]；Apple HIG 同期有 Writing 指南[S8]；Ant Design 2015 年发布，含文案规范章节[S3]。<strong>这些规范的共同特征是：以原则为主，以英文为主，不提供字数硬约束。</strong> 它们解决了"写什么方向"的问题，但没解决"写多长"的问题。</p>
+
+<p><strong>第三阶段（2020 至今）：语调框架出现，中文规范跟进。</strong> Semi Design 2021 年发布 Content Guidelines[S4]，首次引入 Voice/Tone 分离和 5 级语调框架——这是现有最精细的中文文案规范。QQ Design 2022 年发布文案规范[S7]，增加了近义词辨析（新建/创建、发表/发布、转发/分享）和控件用词规则。微信小程序设计指南[S6]和支付宝文档中心[S5]也补充了文案章节。但<strong>所有规范仍然缺少组件级字数约束</strong>。</p>
+
+<h3>核心模式</h3>
+
+<table>
+<thead>
+<tr><th>模式</th><th>证据</th><th>置信度</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>文案规范从"原则层"向"实操层"演进，但卡在字数约束前</td>
+  <td>Ant Design 只有原则[S3]，Semi Design 有语调框架[S4]，QQ Design 有控件用词[S7]，但无一家有字数硬约束</td>
+  <td><span class="tag tag-high">高</span></td>
+</tr>
+<tr>
+  <td>中文文案规范的独特需求（敬语/标点/近义词）正在被填补</td>
+  <td>Ant Design 的"你/您"规则[S3]、QQ Design 的近义词辨析[S7]、支付宝的"简单一致普适"[S5]</td>
+  <td><span class="tag tag-high">高</span></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="layer2-competition">竞争态势分析</h2>
+
+<p>现有方案按聚类分析：</p>
+
+<table>
+<thead>
+<tr><th>聚类</th><th>代表</th><th>核心策略</th><th>优势</th><th>局限</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>设计系统内置规范</td>
+  <td>Ant Design[S3]、Semi Design[S4]、支付宝[S5]、微信[S6]、QQ Design[S7]</td>
+  <td>作为设计系统的子章节</td>
+  <td>权威、有正反例</td>
+  <td>只覆盖自家生态，不跨赛道；无字数硬约束</td>
+</tr>
+<tr>
+  <td>国际通用规范</td>
+  <td>Apple HIG[S8]、Material Design[S9]</td>
+  <td>平台级写作指南</td>
+  <td>有字数建议（Apple）、覆盖全面</td>
+  <td>英文为主，中文场景水土不服；不覆盖广告法</td>
+</tr>
+<tr>
+  <td>AI 文案生成工具</td>
+  <td>ChatGPT、Copy.ai、Jasper AI、Writesonic[S10]</td>
+  <td>通用文案生成</td>
+  <td>快速、多场景</td>
+  <td>不知道 UI 组件字数限制；不检测广告法；无赛道语调调参</td>
+</tr>
+<tr>
+  <td>违禁词检测工具</td>
+  <td>句无忧[S1]、网易易盾[S2]</td>
+  <td>广告法合规检测</td>
+  <td>词库全面</td>
+  <td>只检测不生成；不区分 UI 组件；不调语调</td>
+</tr>
+</tbody>
+</table>
+
+<h3>核心发现</h3>
+
+<table>
+<thead>
+<tr><th>发现</th><th>证据</th><th>置信度</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>组件级字数硬约束是所有方案的空白</strong></td>
+  <td>6 家规范无一家提供，Apple HIG 有零散建议但未系统化[S8]</td>
+  <td><span class="tag tag-high">高</span></td>
+</tr>
+<tr>
+  <td><strong>中文场景的标点/敬语/近义词规则只有 Ant Design 和 QQ Design 覆盖</strong></td>
+  <td>Semi Design 以英文为主[S4]，Apple/Material 不覆盖中文[S8][S9]</td>
+  <td><span class="tag tag-high">高</span></td>
+</tr>
+<tr>
+  <td><strong>广告法合规与文案生成分属不同工具</strong></td>
+  <td>句无忧[S1]和网易易盾[S2]只检测不生成；AI 文案工具只生成不检测[S10]</td>
+  <td><span class="tag tag-high">高</span></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="layer2-deep">深层判断</h2>
+
+<table>
+<thead>
+<tr><th>判断</th><th>依据</th><th>对决策的影响</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>字数硬约束是文案 skill 的护城河，不是锦上添花</td>
+  <td>用户写文案时第一个问题是"这个位置能放几个字"，但所有规范都只回答"应该写什么方向"——<strong>问题空间和解答空间错位</strong></td>
+  <td>skill 必须以组件+字数为骨架，原则和语调是上层调参</td>
+</tr>
+<tr>
+  <td>广告法不是"支付赛道"的专有约束，而是所有 C 端产品的共同底线</td>
+  <td>广告法第 9 条适用于所有广告和商业宣传[S1]，电商 Banner、社区推送、工具类营销弹窗都是触发场景；20-100 万罚款对任何规模产品都是高风险[S2]</td>
+  <td>合规检测是必经关卡，不是可选模块</td>
+</tr>
+<tr>
+  <td>5 级语调框架 + 双簇赛道映射 &gt; 单一语调规则</td>
+  <td>Semi Design 的 5 级语调是场景维度的精细度[S4]，双簇赛道是业务维度的宏观分法——两者正交组合，skill 可以同时响应"这是什么场景"和"这是什么赛道"</td>
+  <td>语调系统设计为 2×5 矩阵：2 簇 × 5 级语调</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="layer2-confidence">置信度评估</h2>
+
+<table>
+<thead>
+<tr><th>关键判断</th><th>支持证据数量</th><th>最高来源可信度</th><th>综合置信度</th></tr>
+</thead>
+<tbody>
+<tr><td>组件字数硬约束是空白</td><td>6 个来源[S3,S4,S5,S6,S7,S8]</td><td>原始来源</td><td><span class="tag tag-high">高</span></td></tr>
+<tr><td>双簇语调分法有效</td><td>3 个来源[S3,S4,S7]</td><td>原始来源</td><td><span class="tag tag-high">高</span></td></tr>
+<tr><td>广告法是所有赛道底线</td><td>2 个来源[S1,S2]</td><td>权威分析</td><td><span class="tag tag-high">高</span></td></tr>
+<tr><td>AI 文案工具不覆盖组件约束</td><td>2 个来源[S9,S10]</td><td>二手分析</td><td><span class="tag tag-medium">中</span></td></tr>
+</tbody>
+</table>
+
+<h2 id="layer2-unverified">未验证假设</h2>
+
+<table>
+<thead>
+<tr><th>假设</th><th>影响</th><th>建议验证方式</th><th>优先级</th></tr>
+</thead>
+<tbody>
+<tr><td>按组件给字数硬约束，用户真的需要吗？</td><td>如果不需要，skill 骨架要改</td><td>用户访谈：问 PM/设计师写文案时最卡在哪里</td><td><span class="tag tag-high">高</span></td></tr>
+<tr><td>两簇语调够用，还是需要 3-4 级？</td><td>影响语调系统复杂度</td><td>用 3 个不同赛道产品测试，看语调是否自然</td><td><span class="tag tag-medium">中</span></td></tr>
+<tr><td>中国大陆广告法合规检测是否足够？</td><td>如果产品面向海外，需要替换法规</td><td>调研目标用户的产品覆盖地区</td><td><span class="tag tag-medium">中</span></td></tr>
+<tr><td>AI 生成文案的广告法违禁率有多高？</td><td>影响检测模块的优先级</td><td>对 3 个 AI 文案工具做违禁词测试</td><td><span class="tag tag-high">高</span></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<div class="layer-divider"><span><span class="nav-layer nav-layer-3">第三层</span> 研究数据</span></div>
+
+<blockquote>需要深挖或质疑结论时参考。</blockquote>
+
+<h2 id="layer3-evolution">行业演变</h2>
+
+<p>产品文案从"没人管"到"设计系统的一部分"，驱动因素是<strong>设计系统的成熟度</strong>——当视觉和交互标准化后，文案不一致的问题就凸显了。Ant Design 2015 年就有了文案规范章节[S3]，说明中台产品最先感受到文案标准化的需求（因为 B 端产品信息密度高，文案不一致直接影响效率）。C 端产品的文案规范来得更晚——支付宝到 2016 年才出版设计精髓[S5]，微信小程序到 2017 年才有设计指南[S6]。</p>
+
+<h3>关键转折点</h3>
+
+<table>
+<thead>
+<tr><th>时间</th><th>发生了什么</th><th>为什么重要</th><th>对我们的启示</th></tr>
+</thead>
+<tbody>
+<tr><td>2014</td><td>Material Design 发布，含 Writing 章节[S9]</td><td>全球首个系统化 UI 文案规范</td><td>原则层（清晰简洁有用）的起点</td></tr>
+<tr><td>2015</td><td>Ant Design 发布，含中文文案规范[S3]</td><td>中文世界首个设计系统文案规范</td><td>中文场景的敬语/标点/近义词规则开始被定义</td></tr>
+<tr><td>2016</td><td>支付宝 AUX 团队出版《体验设计精髓》[S5]</td><td>C 端产品文案开始被重视</td><td>C 端文案的友好/鼓励语调开始成型</td></tr>
+<tr><td>2021</td><td>Semi Design 发布 Content Guidelines[S4]</td><td>首次引入 Voice/Tone 分离 + 5 级语调框架</td><td>语调从二元（友好/正式）变为多级</td></tr>
+<tr><td>2022</td><td>QQ Design 发布文案规范[S7]</td><td>首次加入近义词辨析和控件用词规则</td><td>文案规范从"说什么"向"用哪个词"深化</td></tr>
+<tr><td>2025+</td><td>AI 文案工具普及但无组件约束[S10]</td><td>生成快但不可控</td><td>skill 的差异化在于"可控"而非"快速"</td></tr>
+</tbody>
+</table>
+
+<h3>路径依赖</h3>
+
+<table>
+<thead>
+<tr><th>早期决策</th><th>锁定了什么</th><th>今天的影响</th></tr>
+</thead>
+<tbody>
+<tr><td>设计系统以视觉为主、文案为附</td><td>文案规范是设计系统的子章节，不是独立体系</td><td>文案规范缺少"字数硬约束"——因为视觉规范用 px，文案规范用"简洁"</td></tr>
+<tr><td>英文设计系统先于中文</td><td>中文文案规范继承了英文框架（Voice/Tone/Clarity）</td><td>中文特有的敬语体系（你/您）、标点规范（省略号半角/全角）、近义词辨析被后补而非原生设计</td></tr>
+</tbody>
+</table>
+
+<h2 id="layer3-competition">竞争格局</h2>
+
+<p><strong>竞争场景</strong>：B（少量竞品，各有侧重）</p>
+
+<h3>聚类 1：设计系统内置规范</h3>
+
+<h4>Ant Design[S3]——面向 B 端/中台</h4>
+
+<table>
+<thead>
+<tr><th>维度</th><th>内容</th></tr>
+</thead>
+<tbody>
+<tr><td>核心策略</td><td>原则驱动（5 条原则）+ 统一用词表</td></tr>
+<tr><td>用户口碑（正面）</td><td>中文用词对照表实用，如"登录/登陆""抱歉/对不起"</td></tr>
+<tr><td>用户口碑（负面）</td><td>无字数约束、无语调分级、原则太空泛</td></tr>
+<tr><td>与研究对象的差异</td><td>最接近"效能工具簇"的规范，但缺少实操层</td></tr>
+</tbody>
+</table>
+
+<h4>Semi Design[S4]——面向中后台（字节跳动）</h4>
+
+<table>
+<thead>
+<tr><th>维度</th><th>内容</th></tr>
+</thead>
+<tbody>
+<tr><td>核心策略</td><td>Voice/Tone 分离 + 5 级语调框架 + 语法规则</td></tr>
+<tr><td>用户口碑（正面）</td><td>语调框架精细，语法规则（标点/数字/日期）可直接执行</td></tr>
+<tr><td>用户口碑（负面）</td><td>以英文为主，中文场景覆盖不足</td></tr>
+<tr><td>与研究对象的差异</td><td>语调框架可复用，但需中文化和赛道化</td></tr>
+</tbody>
+</table>
+
+<h4>QQ Design[S7]——面向 C 端社交</h4>
+
+<table>
+<thead>
+<tr><th>维度</th><th>内容</th></tr>
+</thead>
+<tbody>
+<tr><td>核心策略</td><td>3 原则 + 近义词辨析 + 控件用词规则</td></tr>
+<tr><td>用户口碑（正面）</td><td>近义词辨析（新建/创建、转发/分享）极其实用</td></tr>
+<tr><td>用户口碑（负面）</td><td>易错词和统一用词表为图片不可提取、无字数约束</td></tr>
+<tr><td>与研究对象的差异</td><td>最接近"增长转化簇"的中文规范，控件用词规则是亮点</td></tr>
+</tbody>
+</table>
+
+<h3>聚类 2：国际通用规范</h3>
+
+<h4>Apple HIG Writing[S8]</h4>
+
+<table>
+<thead>
+<tr><th>维度</th><th>内容</th></tr>
+</thead>
+<tbody>
+<tr><td>核心策略</td><td>Clarity / Conciseness / Utility</td></tr>
+<tr><td>独特贡献</td><td><strong>唯一有字数建议的规范</strong>（按钮~20字符、标题3-5词、正文1-2短句&lt;150字符）、无障碍写作规则、国际化写作规则（为翻译留30-50%空间）</td></tr>
+<tr><td>局限</td><td>英文为主、不覆盖中文标点/敬语</td></tr>
+</tbody>
+</table>
+
+<h3>聚类 3：AI 文案生成工具</h3>
+
+<p>ChatGPT / Claude / Copy.ai / Jasper AI / Writesonic[S10]：定位通用文案生成，快速多场景，但不知道 UI 组件字数限制、不检测广告法、无赛道语调调参。</p>
+
+<h3>聚类 4：违禁词检测工具</h3>
+
+<p>句无忧[S1] / 网易易盾[S2]：词库全面（极限词/权威词/欺诈词/医疗词/迷信词），但只检测不生成、不区分 UI 组件、不调语调。</p>
+
+<h2 id="layer3-findings">验证发现</h2>
+
+<h3>高置信发现 <span class="tag tag-high">高</span></h3>
+
+<table>
+<thead>
+<tr><th>#</th><th>发现</th><th>支持来源</th><th>对决策的影响</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td><strong>6 家规范无一提供组件级字数硬约束</strong></td><td>Ant Design[S3]、Semi Design[S4]、支付宝[S5]、微信[S6]、QQ Design[S7]、Apple HIG[S8]</td><td>skill 必须填补这个空白，这是最大差异化</td></tr>
+<tr><td>2</td><td><strong>Apple HIG 是唯一有字数建议的规范</strong>（按钮~20字符、标题3-5词、正文&lt;150字符）</td><td>Apple HIG[S8]</td><td>可作为字数硬约束的基准，但需转换为中文语境</td></tr>
+<tr><td>3</td><td><strong>广告法极限词列表非常明确</strong>，违者 20-100 万罚款</td><td>网易易盾[S2]、广告法第 9 条[S1]</td><td>合规检测是必经关卡，词库可直接复用</td></tr>
+<tr><td>4</td><td><strong>Semi Design 的 5 级语调框架是现有最精细的</strong></td><td>Semi Design[S4]</td><td>可直接采用为语调调参层</td></tr>
+<tr><td>5</td><td><strong>中文文案规范的独特需求：敬语（你/您）、标点（省略号半角）、近义词（登录/登陆、新建/创建）</strong></td><td>Ant Design[S3]、QQ Design[S7]</td><td>skill 必须内置中文用词规范，不能简单翻译英文规范</td></tr>
+<tr><td>6</td><td><strong>QQ Design 的控件用词规则是现有最实操的</strong>（发送 vs 发布的判断标准、Toast 用"已删除"不用"删除成功"）</td><td>QQ Design[S7]</td><td>可作为组件用词规则的种子</td></tr>
+<tr><td>7</td><td><strong>Ant Design 和 QQ Design 都明确"用'你'不用'您'"</strong></td><td>Ant Design[S3]、QQ Design[S7]</td><td>敬语规则可作为 skill 的默认设置</td></tr>
+<tr><td>8</td><td><strong>所有规范都强调"不责怪用户"</strong>，错误文案应聚焦解决方案而非归因</td><td>Apple HIG[S8]、Ant Design[S3]、微信[S6]</td><td>错误文案模板必须遵循此原则</td></tr>
+</tbody>
+</table>
+
+<h3>中置信洞察 <span class="tag tag-medium">中</span></h3>
+
+<table>
+<thead>
+<tr><th>#</th><th>洞察</th><th>来源</th><th>可信度理由</th><th>对决策的影响</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>语调差异本质是用户心智模型差异，不是赛道标签差异</td><td>对比 Ant Design vs QQ Design[S3][S7]</td><td>2 个独立来源一致</td><td>语调调参应基于"用户在做什么"而非"产品属于什么赛道"</td></tr>
+<tr><td>2</td><td>AI 文案工具市场已红海化，差异化在于"可控"</td><td>2025-2026 AI 文案工具评测[S10]</td><td>多源一致</td><td>skill 不应和通用 AI 文案工具竞争生成速度，而应竞争可控性</td></tr>
+<tr><td>3</td><td>中文字数约束应该比英文更紧（中文信息密度更高）</td><td>Apple HIG 按钮~20字符[S8]是英文标准</td><td>逻辑推断，缺乏直接数据</td><td>需要自行推算中文组件字数上限</td></tr>
+<tr><td>4</td><td>文案规范从"说什么"向"用哪个词"深化是趋势</td><td>QQ Design 2022 年新增近义词辨析[S7]</td><td>单源但方向明确</td><td>skill 应内置近义词辨析决策树</td></tr>
+<tr><td>5</td><td>无障碍写作规则（不依赖视觉/空间描述）是中文规范空白</td><td>Apple HIG 有完整无障碍写作规则[S8]，中文规范无</td><td>单源对比</td><td>skill 可补位</td></tr>
+<tr><td>6</td><td>国际化写作（为翻译留30-50%空间）对出海产品重要</td><td>Apple HIG[S8]</td><td>单源权威</td><td>可作为可选模块</td></tr>
+</tbody>
+</table>
+
+<h2 id="layer3-questions">开放问题</h2>
+
+<table>
+<thead>
+<tr><th>#</th><th>问题</th><th>需要什么信息来回答</th><th>优先级</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>各组件的中文字数硬约束具体是多少？</td><td>从设计规范提取组件尺寸 + 实际产品文案统计</td><td><span class="tag tag-high">高</span></td></tr>
+<tr><td>2</td><td>社区和内容平台应归入哪个语调簇？</td><td>对比社区产品（豆瓣/小红书/B站）的文案风格</td><td><span class="tag tag-medium">中</span></td></tr>
+<tr><td>3</td><td>小程序端 vs App 端的文案差异有多大？</td><td>对比微信小程序和原生 App 的同一产品文案</td><td><span class="tag tag-unverified">低</span></td></tr>
+<tr><td>4</td><td>海外产品的合规检测应替换为什么法规？</td><td>调研 FTC（美国）/GDPR（欧盟）对产品文案的要求</td><td><span class="tag tag-medium">中</span></td></tr>
+</tbody>
+</table>
+
+<h2 id="layer3-contradictions">信息矛盾点</h2>
+
+<table>
+<thead>
+<tr><th>矛盾</th><th>来源 1</th><th>来源 2</th><th>可能原因</th><th>采信策略</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>敬语选择：Ant Design 和 QQ Design 用"你"不用"您"[S3][S7]，但部分 B 端产品仍用"您"</td>
+  <td>Ant Design[S3]："避免使用'您'"</td>
+  <td>B 端产品惯例（如钉钉/飞书企业版用"您"）</td>
+  <td>场景差异：C 端拉近距离用"你"，B 端正式场景用"您"</td>
+  <td>skill 默认"你"，B 端/正式场景可切换为"您"</td>
+</tr>
+<tr>
+  <td>Apple HIG 按钮~20字符[S8] vs 中文按钮通常 2-8 字</td>
+  <td>Apple HIG[S8]</td>
+  <td>中文产品实际观察</td>
+  <td>英文信息密度低于中文，20 英文字符≈4-8 中文字</td>
+  <td>中文按钮字数约束应独立推算，不直接翻译英文标准</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="layer3-sources">信息源</h2>
+
+<table>
+<thead>
+<tr><th>#</th><th>来源</th><th>类型</th><th>可信度</th><th>访问时间</th><th>URL</th></tr>
+</thead>
+<tbody>
+<tr><td>S1</td><td>句无忧-广告法违禁词</td><td>权威分析</td><td>高</td><td>2026-05-14</td><td>https://m.check51.com/news/info/11000.html</td></tr>
+<tr><td>S2</td><td>网易易盾-新广告法禁用词</td><td>权威分析</td><td>高</td><td>2026-05-14</td><td>https://dun.163.com/news/p/72ce5e19491d4f75a9d97c01581536f8</td></tr>
+<tr><td>S3</td><td>Ant Design 文案规范</td><td>原始来源</td><td>高</td><td>2026-05-14</td><td>https://ant.design/docs/spec/copywriting-cn/</td></tr>
+<tr><td>S4</td><td>Semi Design Content Guidelines</td><td>原始来源</td><td>高</td><td>2026-05-14</td><td>https://semi.design/zh-CN/experience/content-guidelines</td></tr>
+<tr><td>S5</td><td>支付宝文档中心-文案规范</td><td>原始来源</td><td>高</td><td>2026-05-14</td><td>https://opendocs.alipay.com/mini/00murg</td></tr>
+<tr><td>S6</td><td>微信小程序设计指南</td><td>原始来源</td><td>高</td><td>2026-05-14</td><td>https://developers.weixin.qq.com/miniprogram/design/</td></tr>
+<tr><td>S7</td><td>QQ Design 文案规范</td><td>原始来源</td><td>高</td><td>2026-05-14</td><td>https://qq.design/design/Foundation/Writing/</td></tr>
+<tr><td>S8</td><td>Apple HIG Writing</td><td>原始来源</td><td>高</td><td>2026-05-14</td><td>https://developer.apple.com/design/human-interface-guidelines/writing</td></tr>
+<tr><td>S9</td><td>Material Design Writing</td><td>原始来源</td><td>高</td><td>2026-05-14</td><td>https://m3.material.io/foundations/content-design/overview</td></tr>
+<tr><td>S10</td><td>AI 文案工具评测 2025-2026</td><td>二手分析</td><td>中</td><td>2026-05-14</td><td>https://great-good.com/zh-tw/insights/ai-copywriting-tools-2025/</td></tr>
+</tbody>
+</table>
+
+<div class="footer">
+  研究完成时间：2026-05-14<br>
+  研究方法：PD Deep Research 三阶段方法论<br>
+  研究范围：大厂产品文案设计规范、UI 组件文案规则、广告法合规、跨赛道差异、AI 文案工具<br>
+  信息源：10，其中高优先级 9<br>
+  置信度分布：8 高 / 6 中 / 4 待验证
+</div>
+
+</body>
+</html>
