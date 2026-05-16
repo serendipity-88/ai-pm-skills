@@ -1,0 +1,6 @@
+# 开发过程副产物
+_working/
+*.png
+*.jpg
+*.jpeg
+.DS_Store
