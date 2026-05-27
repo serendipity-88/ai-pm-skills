@@ -1,6 +1,6 @@
 # AI PM Skills
 
-> AI 时代产品经理的 Claude Code Skill 工具链——从模糊想法到结构化 PRD 的全流程覆盖。
+> AI 时代产品经理的 Skill 工具链——从模糊想法到结构化 PRD 的全流程覆盖。
 
 ## 三个 Skill
 
