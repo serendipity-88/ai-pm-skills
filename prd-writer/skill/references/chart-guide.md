@@ -136,7 +136,7 @@ graph TB
 ```
 ```
 
-**需要人工补充的图片**（Demo 截图、设计稿、数据截图），用占位标注（详见 `image-placeholder-rules.md`）：
+**已有图片素材的处理**（Demo 截图、设计稿、数据截图）见 `image-placeholder-rules.md`。只有在素材已存在但当前文档平台 CLI/MCP/API 不支持上传或插入时，才保留占位说明：
 
 ```
 > 📷 **图片占位**：{类型} - {说明}

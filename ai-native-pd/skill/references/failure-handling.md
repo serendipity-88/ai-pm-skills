@@ -8,7 +8,7 @@ Phase 3 验证阶段可能遇到的失败场景及应对方式。
 
 **处理方式**：
 1. 降级方案：用静态页面 + 假交互代替核心流程演示
-2. Design 步骤已产出设计规范（`design-system/MASTER.md`、`brand-spec.md` 或支付宝规范模板），Code 失败时降级为基于设计产出生成静态原型
+2. Design 步骤已产出设计规范（`design-system/MASTER.md` 或 `brand-spec.md`），Code 失败时降级为基于设计产出生成静态原型
 3. 明确告知用户当前状态和降级原因，调整预期
 
 ## 场景 2: 用户中途改变需求

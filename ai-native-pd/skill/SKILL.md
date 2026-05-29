@@ -7,7 +7,7 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 
 > 帮助产品经理从模糊想法出发，通过 AI 辅助的需求发现、竞品调研、快速验证，最终交付可运行产品和结构化文档。
 
-> 适合：0→1 产品探索、内部工具、快速验证想法、小团队项目。不适合：多团队 B 端大项目、强合规行业。已有成熟产品迭代请直接用 prd-writer。
+> 推荐使用场景：0→1 产品探索、内部工具、快速验证想法、小团队项目，以及需要先做 Demo、再补齐产品文档的项目。已有成熟产品材料时，也可以直接使用 prd-writer。
 
 ## FIRE 原则
 
@@ -149,13 +149,11 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
      > | Skill | 能做什么 |
      > |-------|---------|
      > | huashu-design | HTML 高保真原型 + 品牌规范 |
-     > | alipay-design | 支付宝设计规范代码模板 |
      > | frontend-design | distinctive 前端界面 |
      >
      > 输入 skill 名称追加，不需要则跳过。
    - 用户选择后调用对应 skill，产出写入项目目录：
      - huashu-design → `assets/brand-spec.md`（品牌规范）+ HTML 高保真原型
-     - alipay-design → 符合支付宝规范的代码模板
      - frontend-design → 前端界面代码
 
 2. **Code**（编码步骤）：
@@ -248,7 +246,7 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 
 - 需求模糊时如检测到 brainstorming skill，可调用它理清思路；未检测到时用内置追问框架继续
 - Phase 1b 如检测到 pd-deep-research skill，调用它做竞品与现状调研；未检测到时用轻量内置调研流程继续，并向用户说明置信度会弱一些
-- Phase 3 Build Design 步骤如检测到 ui-ux-pro-max，可调用它；扫描发现其他已安装 UI skill（huashu-design、alipay-design、frontend-design）时提示用户选择；都未检测到时使用默认样式继续
+- Phase 3 Build Design 步骤如检测到 ui-ux-pro-max，可调用它；扫描发现其他已安装 UI skill（huashu-design、frontend-design）时提示用户选择；都未检测到时使用默认样式继续
 - Phase 4 如检测到 prd-writer skill，调用它生成 PRD；未检测到时使用内置简版 PRD 流程继续
 - 图表生成：drawio（流程图、对比图、ER 图）、architecture-diagram（大型架构图、系统拓扑图）
 - 遇到失败场景（开发失败、需求变更、部署受限）时参考 `references/failure-handling.md`
