@@ -47,7 +47,7 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 | **急用** | "今天要给老板看""快速做个 Demo""时间紧" | 仅确认痛点/目标/用户 3 个核心问题 → 直接 Phase 3 |
 | **正常** | 描述了想法或需求，无特别时间压力 | Phase 1 → 2 → 3 → 4 完整流程 |
 | **论证** | "要立项""帮我论证一下""要说服老板" | Phase 1 深度模式（扩展调研）→ 2 → 3 → 4。论证路径提供更深入的需求调研和竞品分析，但不替代专业立项报告（市场规模/技术可行性请另行准备） |
-| **需求模糊** | 想法不成形，说不清楚要什么 | 先调用 brainstorming skill 理清思路，基于用户选择重新进入分流（最多回流 1 次，若仍模糊则由用户指定路径） |
+| **需求模糊** | 想法不成形，说不清楚要什么 | 如检测到 brainstorming skill，调用它理清思路；未检测到时用内置追问框架继续。基于用户选择重新进入分流（最多回流 1 次，若仍模糊则由用户指定路径） |
 | **要汇报** | "给老板汇报""做个 PPT" | 引导到 pptx 或 internal-comms skill |
 
 分流不锁死——过程中发现需要更深入分析时，可随时从急用升级到正常或论证。
@@ -75,13 +75,13 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 
 自动执行，不需要用户额外输入：
 
-1. **调用 pd-deep-research skill**：传入研究主题（从用户输入提取）+ 产品背景（1a 已收集）+ 输出目录（`assets/pd-deep-research/`）
-2. **读取决策简报**：pd-deep-research 产出 `assets/pd-deep-research/research-report.md`（单文档三层结构），本步骤读取第一层"决策简报"章节，提取：
+1. **调研执行**：如检测到 pd-deep-research skill，调用它并传入研究主题（从用户输入提取）+ `context`（1a 已收集的用户核心任务、7 维度摘要、已知约束、特别关注点）+ 输出目录（`assets/pd-deep-research/`）；未检测到时，向用户披露"未检测到深度调研 skill，将用轻量内置调研继续，置信度会弱一些"，并用同样输出结构生成轻量调研结论
+2. **读取决策简报**：增强模式下，pd-deep-research 产出 `assets/pd-deep-research/research-report.md`（单文档三层结构）；轻量模式下，读取内置调研结论。本步骤读取第一层"决策简报"章节，提取：
    - 关键决策 → 填入需求评估的"现有方案"维度
    - 机会窗口 → 填入"参考/竞品"维度
    - 风险与待确认 → 风险填入"背景/痛点"维度，待确认项标记为待确认
-   - 需求衔接 → 提取产品定位和边界约束
-3. **生成调研摘要文件**：将第一步"决策简报"的提取结果写入 `assets/research-findings.md`，包含：关键决策表、机会窗口、风险与待确认（保留 pd-deep-research 的置信度标签 [高/中/待验证]）。此文件供后续 Phase 4 调用 prd-writer 时使用
+   - 需求衔接 → 提取目标用户、产品定位、边界约束、成功指标方向、下一步行动
+3. **生成调研摘要文件**：将第一步"决策简报"的提取结果写入 `assets/research-findings.md`，包含：关键决策表、机会窗口、风险与待确认、需求衔接（目标用户、产品定位、边界和约束、成功指标、下一步行动），保留 pd-deep-research 的置信度标签 [高/中/待验证]。此文件供后续 Phase 4 调用 prd-writer 时使用
 4. **按需阅读完整分析**：如需更深入理解某个决策的推理链，读取同一文件的第二层"决策推理"章节
 
 > 急用路径跳过此步。
@@ -142,7 +142,8 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 **设计先行**：写代码前先确定设计方向和规范。
 
 1. **Design**（设计步骤）：
-   - 默认调用 **ui-ux-pro-max**，传入产品简报 + 技术栈偏好，产出 `assets/design-system/MASTER.md`（设计系统 + 技术栈实现指南）
+   - 如检测到 **ui-ux-pro-max**，调用它并传入产品简报 + 技术栈偏好，产出 `assets/design-system/MASTER.md`（设计系统 + 技术栈实现指南）
+   - 如未检测到 ui-ux-pro-max，向用户披露"未检测到设计增强 skill，将使用内置轻量设计约束继续"，不阻塞流程
    - 扫描其他已安装 UI skill，向用户提示发现：
      > 检测到你还安装了以下 UI skill，需要一起用吗？
      > | Skill | 能做什么 |
@@ -194,11 +195,13 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 
 ### PRD 生成
 
-调用 prd-writer skill，它会自动扫描项目目录下的所有材料并推断 31 维度，无需指定文件名。调用前确保以下 Phase 1-3 产出文件已写入项目目录（prd-writer 会从中提取信息）：
+如检测到 prd-writer skill，调用它生成 PRD；它会自动扫描项目目录下的所有材料并推断 31 维度，无需指定文件名。调用前确保以下 Phase 1-3 产出文件已写入项目目录（prd-writer 会从中提取信息）：
 - `assets/requirement-assessment.md` — 需求评估（Phase 1 产出）
 - `assets/research-findings.md` — 调研发现摘要（Phase 1 产出，从 pd-deep-research 决策简报提取）
 - `assets/product-brief.md` — 产品简报（Phase 2 产出）
 - `src/` 或项目代码 — Demo 代码（Phase 3 产出）
+
+如未检测到 prd-writer，向用户披露"未检测到 PRD 增强 skill，将使用内置简版 PRD 流程继续，质量检查和章节裁剪会更轻量"，并基于 `assets/requirement-assessment.md`、`assets/research-findings.md`、`assets/product-brief.md`、Demo 代码生成 Markdown PRD。
 
 ### 代码整理
 
@@ -243,9 +246,9 @@ description: "AI 时代产品经理全流程工作方式——从模糊想法到
 
 ## 协作
 
-- 需求模糊时调用 brainstorming skill 理清思路
-- Phase 1b 调用 pd-deep-research skill 做竞品与现状调研
-- Phase 3 Build Design 步骤默认调用 ui-ux-pro-max，扫描发现其他已安装 UI skill（huashu-design、alipay-design、frontend-design）时提示用户选择
-- Phase 4 调用 prd-writer skill 生成 PRD
+- 需求模糊时如检测到 brainstorming skill，可调用它理清思路；未检测到时用内置追问框架继续
+- Phase 1b 如检测到 pd-deep-research skill，调用它做竞品与现状调研；未检测到时用轻量内置调研流程继续，并向用户说明置信度会弱一些
+- Phase 3 Build Design 步骤如检测到 ui-ux-pro-max，可调用它；扫描发现其他已安装 UI skill（huashu-design、alipay-design、frontend-design）时提示用户选择；都未检测到时使用默认样式继续
+- Phase 4 如检测到 prd-writer skill，调用它生成 PRD；未检测到时使用内置简版 PRD 流程继续
 - 图表生成：drawio（流程图、对比图、ER 图）、architecture-diagram（大型架构图、系统拓扑图）
 - 遇到失败场景（开发失败、需求变更、部署受限）时参考 `references/failure-handling.md`

@@ -1,6 +1,6 @@
 # prd-writer skill
 
-基于项目已有材料（方案文档、Demo 代码、设计规范）反向生成结构化 PRD 的 Claude Code skill。
+基于项目已有材料（方案文档、Demo 代码、设计规范）反向生成结构化 PRD 的 Agent CLI skill。
 
 ## 项目定位
 
@@ -26,7 +26,7 @@ prd-writer/
 bash publish.sh
 ```
 
-会将 `skill/` 中的文件复制到所有 Claude Code skills 安装目录（.claude / cc / fuse）。
+会将 `skill/` 中的文件复制到指定 Agent CLI skills 安装目录。默认覆盖 Codex / Claude Code / CodeFuse 的已知路径，也可以用 `bash publish.sh custom /path/to/skills/prd-writer` 指定目录。
 
 ## 迭代流程
 

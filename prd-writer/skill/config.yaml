@@ -3,20 +3,36 @@
 # 修改此文件自定义 PRD 输出行为，不需要改动 SKILL.md
 # ============================================================
 
-# --- 语雀同步配置 ---
+# --- 文档发布配置 ---
 
-yuque:
-  # 是否在生成 Markdown 后自动同步到语雀
-  # 设为 false 则跳过语雀同步
-  auto_sync: true
+# PRD 生成后通常需要发布到团队文档平台。首次使用时由 agent 探测当前环境
+# 可用的 CLI / MCP / API 配置，并让用户选择发布目标；不要默认上传到固定空间。
+publish:
+  # ask: 每次发布前确认；always: 使用下方默认目标自动发布；never: 只生成本地文件
+  mode: ask
 
-  # 语雀知识库 ID
-  # 获取方式: 打开知识库页面 → URL 中的数字，或通过语雀 API 查询
-  # 设为 null 则每次询问用户同步到哪个知识库
-  book_id: 177051568
+  # provider 可选：yuque / feishu / dingtalk / notion / local
+  # null 表示首次运行时让用户选择
+  provider: null
 
-  # 知识库名称（仅用于日志显示，不影响同步逻辑）
-  book_name: "N项目-容淼"
+  # 固定发布目标。null 表示每次询问或由 provider 自行探测。
+  target: null
+
+  providers:
+    yuque:
+      book_id: null
+      book_name: null
+    feishu:
+      space_id: null
+      folder_token: null
+    dingtalk:
+      workspace_id: null
+      folder_id: null
+    notion:
+      database_id: null
+      parent_page_id: null
+    local:
+      output_dir: "prd/"
 
 # --- 默认值 ---
 

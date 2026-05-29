@@ -86,7 +86,7 @@ claude "/prd-writer"
 
 **请用户在新会话中运行**：
 ```bash
-cd /Users/guannan/Desktop/ai-skills/prd-writer/tests/test-image-placeholder
+cd prd-writer/tests/test-image-placeholder
 claude "/prd-writer"
 ```
 

@@ -3,7 +3,7 @@
 ## 项目结构
 
 - `skill/` 是 skill 工作目录，可以随意修改试验
-- 定稿后运行 `bash publish.sh` 发布到所有 Claude Code skills 安装目录
+- 定稿后运行 `bash publish.sh` 发布到已知 Agent CLI skills 安装目录，或用 `bash publish.sh codex|claude|codefuse|custom <path>` 指定目标
 - 项目和 skill 安装是隔离的：项目里改不影响已安装的 skill，必须显式发布
 - `iterations/` 记录每轮迭代的改动和决策
 

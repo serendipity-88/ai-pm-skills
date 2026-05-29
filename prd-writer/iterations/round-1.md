@@ -9,7 +9,7 @@
 ## 产出
 
 - PRD V1.0 → V1.1，发布到语雀
-- 语雀 URL: https://yuque.antfin.com/guannan.gan/bu4y0c/fwzr1pd1vkgk508l
+- 语雀 URL: 已脱敏
 
 ## 发现的问题
 

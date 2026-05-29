@@ -129,7 +129,27 @@ Phase 5: [完整模式] 用户看第一版 → subagent 规则验证 → 输出�
 
 推断完成后：
 
-1. 将维度表写入 `prd/.prd-cache/v{版本号}/dimensions.yaml`（格式：`#N 维度名: 结果值`，31 行）
+1. 将维度表写入 `prd/.prd-cache/v{版本号}/dimensions.yaml`，使用可解析 YAML，不使用 `#1 xxx: yyy` 这类注释式键名。推荐结构：
+
+```yaml
+schema_version: 1
+mode: full   # full 或 lite
+dimensions:
+  - id: 1
+    key: product_type
+    name: 产品类型
+    value: H5页面
+    status: inferred   # inferred / confirmed / needs_confirmation
+    evidence: 从 demo 入口和文件类型推断
+derived:
+  charts:
+    architecture: false
+    flowchart: true
+    sequence: false
+    state_machine: false
+```
+
+维度条件判断时优先读取 `dimensions[].id` 与 `dimensions[].value`，图表判断读取 `derived.charts`。
 2. 读取 `templates/phase1-summary.md` 输出项目理解摘要给用户确认，同时写入 `prd/.prd-cache/v{版本号}/phase1-summary.md`
 
 > `prd/.prd-cache/` 是所有过程文件的存储目录，Phase 间数据传递通过文件，不依赖对话上下文。
@@ -234,17 +254,27 @@ prd/
 
 版本管理：重大变更 → 主版本 +1；功能调整 → 次版本 +1；文字修正 → 不升级。
 
-语雀同步：Phase 5 完成后自动同步（`config.yaml` 中 `yuque.auto_sync`）。同步流程如下：
+### 文档发布
+
+Phase 5 完成后，根据 `config.yaml` 中的 `publish` 配置处理发布：
+
+- `mode: ask`（默认）：每次发布前向用户确认目标平台、空间/知识库/目录和发布内容
+- `mode: always`：仅在 `provider` 和 `target` 已明确配置时自动发布
+- `mode: never`：只保留本地 Markdown/HTML，不发布到外部平台
+
+首次运行或 `provider: null` 时，先探测当前环境中可用的文档发布能力，例如语雀、飞书、钉钉、Notion 的 CLI/MCP/API 配置，以及本地目录。探测后向用户展示可选目标；未检测到可用发布能力时，默认只生成本地文件，并提示用户可在 `config.yaml` 中配置发布目标。
+
+发布流程如下：
 
 1. **统计代码块**：统计本地 PRD Markdown 中 ` ```mermaid ` 和 ` ```plantuml ` 代码块的数量
-2. **生成 body**：将 Markdown 转为语雀 body，所有 Mermaid/PlantUML 代码块原样保留（语雀原生渲染，不得替换为文字描述或占位符）
+2. **生成 body**：将 Markdown 转为目标平台 body，所有 Mermaid/PlantUML 代码块优先原样保留；若目标平台不支持原生渲染，先向用户说明降级方式
 3. **校验 body**：确认 body 中 mermaid/plantuml 代码块数量与源文件一致，如不一致则修复后重试
-4. **上传**：调用语雀 API 写入文档
-5. **回读校验**：用 API 读回语雀文档，确认代码块数量和渲染正常
+4. **上传**：调用用户确认的文档平台能力写入文档
+5. **回读校验**：如平台支持 API 回读，确认代码块数量和渲染正常
 6. **处理图片**：有截图素材→上传替换占位符；无素材→保留 `📷 **图片占位**：{类型} - {说明}` 格式（位置、操作字段必填）
 
-**同步格式规则（硬性）**：
-- Mermaid 和 PlantUML 代码块语雀原生渲染，同步时必须原样保留，不得替换为文字描述或占位符
+**发布格式规则（硬性）**：
+- Mermaid 和 PlantUML 代码块在支持的平台中必须原样保留，不得替换为文字描述或占位符
 - 仅图片类占位允许保留占位符，代码块类图表不允许占位
 - 图片占位符统一使用 `📷 **图片占位**` 格式，不用 `⚠️`
 
@@ -297,7 +327,7 @@ Phase 4 写完 PRD 后，**先交给用户看第一版**，然后启动 subagent
 
 | 文件 | 用途 | 加载时机 |
 |------|------|---------|
-| `config.yaml` | 产出目录、文件格式、语雀同步、默认受众等可配置参数 | 启动时读取 |
+| `config.yaml` | 产出目录、文件格式、文档发布、默认受众等可配置参数 | 启动时读取 |
 | `templates/phase1-summary.md` | 项目理解摘要模板，定义固定项和条件项的展示规则 | Phase 1 推断完成后 |
 | `templates/prd-skeleton.md` | PRD 骨架模板，含章节条件开关和写作提示 | Phase 3 输出框架时 |
 | `references/writing-rules.md` | 写作基础规则、交互描述规范、数据格式、符号、术语、PRD格式规范 | Phase 4 开始写作时 |
