@@ -1,4 +1,4 @@
-# 碰一下支付异常退款 — Phase 1 预期推断结果
+# NFC支付异常退款 — Phase 1 预期推断结果
 # 复杂 case：多端、状态机、AB实验、资金风险
 
 dimensions:

@@ -41,4 +41,4 @@ bash publish.sh
 ## 当前版本
 
 - Skill: v1.1（32 个推断维度、4 种描述模式、PlantUML/Mermaid/Graphviz 图表支持）
-- 已完成 1 轮输出验证（碰一下会员识别）
+- 已完成 1 轮输出验证（NFC会员识别）

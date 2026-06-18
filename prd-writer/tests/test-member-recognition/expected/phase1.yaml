@@ -1,4 +1,4 @@
-# 碰一下会员识别 — Phase 1 预期推断结果
+# NFC会员识别 — Phase 1 预期推断结果
 # 只列关键维度，未列出的表示"不关心，任何合理值都可接受"
 
 dimensions:
@@ -30,7 +30,7 @@ dimensions:
 
   16_glossary:
     expected: "跳过"
-    reason: "碰一下/NFC/会员 均为行业通用术语"
+    reason: "NFC/会员 均为行业通用术语"
 
   # --- 流程与交互 ---
   17_user_flow:

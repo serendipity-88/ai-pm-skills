@@ -4,7 +4,7 @@
 
 ## 测试项目
 
-碰一下会员识别（`tests/test-member-recognition/`）
+NFC会员识别（`tests/test-member-recognition/`）
 
 ## 产出
 
