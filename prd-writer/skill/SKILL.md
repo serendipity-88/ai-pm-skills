@@ -25,14 +25,24 @@ description: 基于已有原型、Demo或方案文档反向生成结构化PRD。
 
 ```
 Phase 1: 读取项目材料 → 推断 31 维度 → 写入 .prd-cache/dimensions.yaml → 输出项目理解摘要（用户确认）
-         └→ 自动判断流程模式：轻量（#2=轻量 且 #3=轻量 且 #29≠多端 且 #25≠需要）或 完整
+         └→ 自动判断流程模式（三档）：
+            完整：默认
+            轻量：#2=轻量 且 #3=轻量 且 #29≠多端 且 #25≠需要
+            H5轻量：#1=H5/小程序页面 且 #5=迭代 且 #3≤5模块 且 #29≠多端
 Phase 2: [完整模式] 2 轮交互确认（成功指标讨论 + 必问项）
          [轻量模式] 仅 Round 2 必问项（跳过成功指标讨论）
-Phase 3: [完整模式] 读取骨架模板 → 按推断结果裁剪 → 输出框架（用户确认）
+         [H5轻量模式] 仅 Round 2 必问项（跳过成功指标讨论）
+Phase 3: [完整模式] 读取 prd-skeleton.md → 按推断结果裁剪 → 输出框架（用户确认）
          [轻量模式] 跳过，直接进入 Phase 4
-Phase 4: 填充完整内容（参考 references/ 中的写作规范和风格指南）
+         [H5轻量模式] 读取 prd-skeleton-lightweight-h5.md → 输出框架（用户确认）
+Phase 4: 填充完整内容
+         [反套写规则] 从需求推导结构，不从已有PRD套写。核心判断、利益点、CTA、指标都从截图+用户输入+领域知识推导，不参考模板中的内容提示。不加载任何已有PRD作为内容参考。
+         [完整模式] 加载全部 reference 文件（见下方引用加载分层）
+         [轻量模式] 加载 core-conventions.md + writing-rules.md（见下方引用加载分层）
+         [H5轻量模式] 仅加载 references/h5-lite-rules.md（含反套写规则+最小格式集+H5专属scope规则+模式A格式），不加载其他 reference 文件
 Phase 5: [完整模式] 用户看第一版 → 检测 QA 能力 → 规则验证 → 输出修改建议 → 用户确认后修改
          [轻量模式] 用户看第一版 → 检测 QA 能力 → 轻量规则验证
+         [H5轻量模式] 用户看第一版 → 检测 QA 能力 → 仅检查 h5-lite-rules.md 中的规则（反套写+最小格式集+scope合规）
 ```
 
 ---
@@ -160,6 +170,8 @@ derived:
 
 > **轻量模式**：跳过 Round 1，仅执行 Round 2 必问项。
 
+> **H5轻量模式**：跳过 Round 1，仅执行 Round 2 必问项。
+
 ### Round 1: 成功指标讨论（完整模式）
 
 先基于材料**自主推断**成功标准，然后展示给用户讨论。
@@ -199,6 +211,8 @@ Phase 2 交互完成后，将成功指标和必问项回答写入 `prd/.prd-cach
 
 > **轻量模式**：跳过本阶段，直接用最小骨架（概述 + 需求描述 + 干系人）进入 Phase 4。
 
+> **H5轻量模式**：4 章结构（背景与判断 + 方案概述 + 产品方案 + 数据度量与实验），砍掉：名词解释、配置化设计、演进规划、验收标准、前后对比表、依赖与待定、干系人与分工、范围排除、非功能性需求、风险与应对。
+
 **完整模式：必须先输出框架，等用户确认后再填充内容。**
 
 读取 `prd/.prd-cache/v{版本号}/dimensions.yaml` 和 `templates/prd-skeleton.md`，根据维度推断结果裁剪章节（条件不满足的整段删除）。裁剪后的框架写入 `prd/.prd-cache/v{版本号}/phase3-framework.md`。输出框架需包含：
@@ -211,6 +225,8 @@ Phase 2 交互完成后，将成功指标和必问项回答写入 `prd/.prd-cach
 
 ### 模式选择逻辑（内部使用，不对用户暴露 A/B/C/D 标签）
 
+> 优先级：H5轻量 > 轻量 > 完整。当同时满足多档条件时，取最具体的模式。
+
 | 内部标签 | 对用户展示为 | 触发条件 |
 |---------|-------------|---------|
 | 模式 A | 页面结构描述 | 有 UI 界面/页面结构 |
@@ -222,12 +238,35 @@ Phase 2 交互完成后，将成功指标和必问项回答写入 `prd/.prd-cach
 
 ## Phase 4: 内容写作
 
-读取 `prd/.prd-cache/v{版本号}/dimensions.yaml` 确认维度结果，然后**必须读取以下 reference 文件**作为写作规范。当主要材料为代码时，功能描述必须从**用户视角**撰写（"用户点击XX后看到YY"），不从实现视角撰写（"组件调用 handleClick 触发 setState"）。
+读取 `prd/.prd-cache/v{版本号}/dimensions.yaml` 确认维度结果，然后按模式分层加载 reference 文件。
 
-- `references/writing-rules.md` — 基础写作规则、交互描述规范、数据格式、符号、术语
-- `references/forbidden-patterns.md` — 禁用表达清单、不确定性分级标记
-- `references/prd-writing-style-guide.md` — 量化风格规则、4 种描述模式详细格式与示例、模板差异
-- `references/chart-guide.md` — 图表类型选择决策树、工具用法细节、PlantUML 写法规范、Fireworks 可选增强路径（仅在需要画图时加载）
+### 引用加载分层
+
+| 模式 | 加载文件 | 不加载 |
+|------|---------|--------|
+| **H5轻量** | `references/h5-lite-rules.md`（含反套写规则+最小格式集+H5专属scope规则+模式A格式） | core-conventions.md、writing-rules.md、forbidden-patterns.md、prd-writing-style-guide.md、chart-guide.md |
+| **轻量** | `core-conventions.md` + `writing-rules.md` | forbidden-patterns.md、prd-writing-style-guide.md、chart-guide.md |
+| **完整** | `core-conventions.md` + `writing-rules.md` + `forbidden-patterns.md` + `prd-writing-style-guide.md` + `chart-guide.md`（按需） | — |
+
+### 反套写规则（所有模式通用）
+
+**从需求推导结构，不从已有PRD套写。** 核心判断、利益点、CTA、指标都从截图+用户输入+领域知识推导，不参考模板中的内容提示。不加载任何已有PRD作为内容参考。
+
+> Skill 管范围（砍什么、留什么、写到多深），LLM 管内容（怎么写、用什么词、怎么组织逻辑）。
+
+### 共享基座（完整/轻量模式加载）
+
+- `~/.claude/skills/writing-base/references/core-conventions.md` — 数据格式、禁用表达、情态词、符号、颜色语义
+
+### PRD 专用（完整模式加载）
+
+- `references/writing-rules.md` — 交互描述规范（5要素）、PRD 格式规范
+- `references/forbidden-patterns.md` — 不确定性分级标记（扩展）
+- `references/prd-writing-style-guide.md` — 4 种描述模式（A/B/C/D）、量化风格规则、模板差异
+- `references/chart-guide.md` — 图表类型选择决策树、PlantUML 写法规范、Fireworks 可选增强路径（仅在需要画图时加载）
+
+**语雀排版**（同步时加载 yuque-power-user skill）：
+- 同步到语雀时，加载 yuque-power-user skill 的参考文件（html-table-advanced.md、ymd-syntax.md、SKILL.md），按其规范转换格式
 
 ---
 
@@ -293,9 +332,10 @@ Phase 4 写完 PRD 后，**先交给用户看第一版**，然后检测当前 Ag
 2. 如具备独立 QA 能力，启动一个 QA agent，传入：
    - PRD 文件路径
    - `prd/.prd-cache/v{版本号}/dimensions.yaml`（用于条件化裁剪检查项）
-   - `references/writing-rules.md`
-   - `references/forbidden-patterns.md`
-   - `references/prd-writing-style-guide.md`
+   - 按模式加载的 reference 文件：
+     - 完整模式：`references/writing-rules.md` + `references/forbidden-patterns.md` + `references/prd-writing-style-guide.md`
+     - 轻量模式：`references/writing-rules.md`
+     - H5轻量模式：`references/h5-lite-rules.md`
    - 下方质量检查清单（QA agent 根据维度结果跳过不适用的条目）
 3. 如不具备独立 QA 能力，在当前会话内逐条执行同一检查清单
 4. 输出检查报告（pass/fail + 具体修改建议），写入 `prd/.prd-cache/v{版本号}/phase5-review.md`
@@ -325,6 +365,12 @@ Phase 4 写完 PRD 后，**先交给用户看第一版**，然后检测当前 Ag
 - [ ] <!-- if: 有配置化需求 --> 配置化字段是否覆盖所有面向用户的文案和数据
 - [ ] <!-- if: 已有截图/图片素材 --> 图片是否已根据目标平台 CLI/MCP/API 能力完成上传、引用或占位说明（详见 references/image-placeholder-rules.md）
 
+**H5轻量模式额外检查：**
+- [ ] 需求是否放在1个表（模块｜说明），未分小节
+- [ ] 背景是否精简（1段问题陈述+可选根因表），未重复人群数据
+- [ ] 是否已砍掉：名词解释、配置化设计、演进规划、验收标准、前后对比表、依赖与待定、干系人与分工、范围排除、非功能性需求、风险与应对
+- [ ] 交互说明是否为行内一句话描述，未展开5要素
+
 ---
 
 ## Additional Resources
@@ -333,8 +379,14 @@ Phase 4 写完 PRD 后，**先交给用户看第一版**，然后检测当前 Ag
 |------|------|---------|
 | `config.yaml` | 产出目录、文件格式、文档发布、默认受众等可配置参数 | 启动时读取 |
 | `templates/phase1-summary.md` | 项目理解摘要模板，定义固定项和条件项的展示规则 | Phase 1 推断完成后 |
-| `templates/prd-skeleton.md` | PRD 骨架模板，含章节条件开关和写作提示 | Phase 3 输出框架时 |
-| `references/writing-rules.md` | 写作基础规则、交互描述规范、数据格式、符号、术语、PRD格式规范 | Phase 4 开始写作时 |
-| `references/forbidden-patterns.md` | 禁用表达清单、不确定性分级标记、情态词规范 | Phase 4 写作时 + 质量检查时 |
-| `references/prd-writing-style-guide.md` | 量化风格规则（23篇PRD分析）、4种描述模式详细格式与示例、模板差异 | Phase 4 写作时（grep 搜索关键模式） |
-| `references/chart-guide.md` | 图表类型选择决策树、工具用法细节、PlantUML写法规范、Fireworks可选增强路径 | 需要画图时按需加载 |
+| `templates/prd-skeleton.md` | PRD 骨架模板，含章节条件开关和写作提示 | Phase 3 输出框架时（完整模式） |
+| `templates/prd-skeleton-lightweight-h5.md` | H5轻量模式精简骨架模板 | Phase 3 输出框架时（H5轻量模式） |
+| `references/h5-lite-rules.md` | H5轻量模式精简规范（反套写+最小格式集+H5专属scope+模式A格式） | Phase 4 写作时（仅H5轻量模式） |
+| `references/writing-rules.md` | 写作基础规则、交互描述规范、数据格式、符号、术语、PRD格式规范 | Phase 4 开始写作时（完整/轻量模式） |
+| `references/forbidden-patterns.md` | 禁用表达清单、不确定性分级标记、情态词规范 | Phase 4 写作时 + 质量检查时（完整模式） |
+| `references/prd-writing-style-guide.md` | 量化风格规则（23篇PRD分析）、4种描述模式详细格式与示例、模板差异 | Phase 4 写作时（完整模式，grep 搜索关键模式） |
+| `references/chart-guide.md` | 图表类型选择决策树、工具用法细节、PlantUML写法规范、Fireworks可选增强路径 | 需要画图时按需加载（完整模式） |
+| `references/image-placeholder-rules.md` | 图片占位符格式规则、平台能力检测、占位 vs 上传决策 | 有截图/图片素材时按需加载 |
+| `yuque-power-user/html-table-advanced.md` | HTML 表格：表头底色、列宽、合并、单元格内块级列表 | 语雀同步时 |
+| `yuque-power-user/ymd-syntax.md` | 语雀 Lake 语法：高亮块、折叠、多栏、Mermaid 等 | 语雀同步时 |
+| `yuque-power-user/SKILL.md` | 7 条核心护栏（有毒标签、表格不入容器等） | 语雀同步时 |

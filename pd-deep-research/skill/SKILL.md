@@ -3,6 +3,7 @@ name: pd-deep-research
 description: |
   PM 早期决策研究——从模糊问题到可行动的产品决策依据。通过行业演变与竞争态势双视角，产出分层决策简报，直接服务于做不做、做什么、怎么赢、怎么赚、怎么避坑五类产品决策。
   触发词：帮我调研、分析一下竞品、研究一下这个方向、做个竞品分析、分析市场、深度研究、帮我摸清楚、帮我搞懂。
+  不适合：简单事实查询、写公众号、已有明确需求只需写 PRD。
 ---
 
 # PD Deep Research
@@ -13,7 +14,8 @@ description: |
 
 帮助 PM 完成早期需求阶段的信息收集和分析，最终产出的是**决策依据**，不是研究报告。调研产出的每个发现都应指向下游产品决策：做不做（方向判断）、做什么（产品定位与 MVP 边界）、怎么赢（差异化与竞争策略）、怎么赚（商业模式与增长路径）、怎么避坑（关键风险与应对）。
 
-推荐使用场景：新赛道探索、竞品深度分析、技术选型论证、市场进入策略、产品创新方向研究，以及需要把信息整理成产品决策依据的早期研究任务。
+适合：新赛道探索、竞品深度分析、技术选型论证、市场进入策略、产品创新方向研究
+不适合：简单事实查询（"XX 是什么"）、写公众号文章、已有明确需求只需写 PRD（用 prd-writer）
 
 ## 独立运行与可调用
 
@@ -33,11 +35,16 @@ description: |
 - `type`（可选）：产品/公司/技术/市场/人物
 - `goal`（可选）：要解决什么决策问题
 - `focus`（可选）：特别关注的方向
-- `context`（可选）：调用方已收集的产品背景、用户核心任务、需求评估摘要、已知约束、特别关注点。被 ai-native-pd 调用时，应传入 Phase 1a 的结构化结果，避免研究退化成泛泛市场分析
+- `output_format`（可选）：输出格式，可选 `markdown`（默认）、`html`、`both`
 
 **输出**：
 - `{output_dir}/research-report.md` — 完整三层研究文档（始终产出）
-- 不询问消费场景，不产出 HTML
+- `{output_dir}/research-report.html` — HTML 交互报告（当 `output_format` 为 `html` 或 `both` 时产出）
+
+**HTML 生成**：
+- 使用 `templates/research-report.html` 模板
+- CSS 样式参照 `cases/订阅支付流失挽回/research-report.html`（Anthropic/Claude 风格：奶油色背景 #faf9f5 + 深色侧边栏 #141413 + 橙色强调色 #d97757）
+- 三层导航结构：决策简报 / 决策推理 / 研究数据
 
 **调用方读取**：
 - 第一层（决策简报）：文档开头的 `# 第一层：决策简报` 到 `---` 分割线
@@ -372,9 +379,12 @@ HTML 交互报告使用三层导航（决策简报 / 决策推理 / 研究数据
 - `table-layout: auto` + 内容感知 colgroup 收缩短值列
 - `.decision-table` 保留 `table-layout: fixed` + 显式列宽百分比
 - `th { white-space: nowrap }`，`td { word-break: break-word }`
-- 表格样式以 `cases/` 目录中的已验证 HTML 报告为准，避免依赖外部项目记忆或本地私有文件
+- 详细规范见项目记忆 `feedback_html_table_layout.md`
 
-**被其他 skill 调用时**：不询问消费场景，直接产出完整 `research-report.md`。调用方自行决定读取哪些章节。
+**被其他 skill 调用时**：
+- 不询问消费场景，直接产出完整 `research-report.md`
+- 当 `output_format` 为 `html` 或 `both` 时，同时产出 `research-report.html`
+- 调用方自行决定读取哪些章节
 
 ## 产出规范
 

@@ -1,2 +1,12 @@
 .DS_Store
 outputs/
+
+# Sensitive local files
+.playwright-mcp/
+.claude/
+*.local/
+
+# Local duplicates / not ready for public
+prd-writer/SKILL.md
+prd-writer/templates/
+sidebar-*.png
