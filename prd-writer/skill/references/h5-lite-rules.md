@@ -1,6 +1,6 @@
 # H5 轻量模式写作规范
 
-> 本文件替代 writing-rules.md + forbidden-patterns.md + prd-writing-style-guide.md，仅供 H5 轻量模式使用。
+> 本文件替代 writing-rules.md + forbidden-patterns.md + prd-writing-style-guide.md + core-conventions.md，仅供 H5 轻量模式使用。
 > 完整模式和轻量模式仍使用原有 reference 文件。
 
 ## 1. 反套写规则
@@ -68,6 +68,7 @@
 | 需求1表制 | 所有需求点放在1个表（模块｜说明），用 `+` 列表项，不分小节 |
 | 背景极简 | 精简问题陈述+可选根因表，人群数据链接到已有文档不重复 |
 | 数据写完整 | 指标表+AB实验表+埋点清单，不偷懒写"同线上" |
+| 需求优先级 | P0/P1/P2 分级，用颜色标注（P0 红底、P1 黄底） |
 | 砍掉的章节 | 名词解释、配置化设计、演进规划、验收标准、前后对比表、依赖与待定、干系人与分工、范围排除、非功能性需求、风险与应对 |
 
 ## 9. 描述格式

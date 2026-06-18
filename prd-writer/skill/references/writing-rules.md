@@ -123,7 +123,7 @@
 ## 行业术语
 
 自然使用，不需要额外解释的术语：
-- 碰一下支付、NFC 近场支付、WebView、H5
+- NFC 近场支付、WebView、H5
 - AB 实验、实验组/对照组、分组策略
 - UV/PV、完读率、转化率、留存率
 - 埋点、曝光、进入视口、IntersectionObserver

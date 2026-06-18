@@ -143,7 +143,7 @@ Phase 5: [完整模式] 用户看第一版 → 检测 QA 能力 → 规则验证
 
 ```yaml
 schema_version: 1
-mode: full   # full 或 lite
+mode: full   # full / lite / h5-lite
 dimensions:
   - id: 1
     key: product_type
@@ -256,7 +256,7 @@ Phase 2 交互完成后，将成功指标和必问项回答写入 `prd/.prd-cach
 
 ### 共享基座（完整/轻量模式加载）
 
-- `~/.claude/skills/writing-base/references/core-conventions.md` — 数据格式、禁用表达、情态词、符号、颜色语义
+- `references/core-conventions.md` — 数据格式、禁用表达、情态词、符号、颜色语义
 
 ### PRD 专用（完整模式加载）
 
@@ -333,8 +333,8 @@ Phase 4 写完 PRD 后，**先交给用户看第一版**，然后检测当前 Ag
    - PRD 文件路径
    - `prd/.prd-cache/v{版本号}/dimensions.yaml`（用于条件化裁剪检查项）
    - 按模式加载的 reference 文件：
-     - 完整模式：`references/writing-rules.md` + `references/forbidden-patterns.md` + `references/prd-writing-style-guide.md`
-     - 轻量模式：`references/writing-rules.md`
+     - 完整模式：`references/core-conventions.md` + `references/writing-rules.md` + `references/forbidden-patterns.md` + `references/prd-writing-style-guide.md`
+     - 轻量模式：`references/core-conventions.md` + `references/writing-rules.md`
      - H5轻量模式：`references/h5-lite-rules.md`
    - 下方质量检查清单（QA agent 根据维度结果跳过不适用的条目）
 3. 如不具备独立 QA 能力，在当前会话内逐条执行同一检查清单
@@ -370,6 +370,9 @@ Phase 4 写完 PRD 后，**先交给用户看第一版**，然后检测当前 Ag
 - [ ] 背景是否精简（1段问题陈述+可选根因表），未重复人群数据
 - [ ] 是否已砍掉：名词解释、配置化设计、演进规划、验收标准、前后对比表、依赖与待定、干系人与分工、范围排除、非功能性需求、风险与应对
 - [ ] 交互说明是否为行内一句话描述，未展开5要素
+- [ ] 需求优先级是否清晰（P0/P1/P2）
+- [ ] 写作基础：是否用"本页面/本模块"而非"我们"、段落是否结论先行、视觉细节是否交给设计稿
+- [ ] 条件句是否统一用"如X，则Y"、方案决策是否直接定方案不列选项
 
 ---
 
@@ -378,6 +381,7 @@ Phase 4 写完 PRD 后，**先交给用户看第一版**，然后检测当前 Ag
 | 文件 | 用途 | 加载时机 |
 |------|------|---------|
 | `config.yaml` | 产出目录、文件格式、文档发布、默认受众等可配置参数 | 启动时读取 |
+| `references/core-conventions.md` | 写作基座规范（数据格式、禁用表达、情态词、符号、颜色语义） | Phase 4 写作时（完整/轻量模式） |
 | `templates/phase1-summary.md` | 项目理解摘要模板，定义固定项和条件项的展示规则 | Phase 1 推断完成后 |
 | `templates/prd-skeleton.md` | PRD 骨架模板，含章节条件开关和写作提示 | Phase 3 输出框架时（完整模式） |
 | `templates/prd-skeleton-lightweight-h5.md` | H5轻量模式精简骨架模板 | Phase 3 输出框架时（H5轻量模式） |
