@@ -36,12 +36,28 @@ PRD 中的视觉素材分为两类：
 
 在发布到语雀、飞书、钉钉、Notion 或其他平台前，先探测当前可用能力：
 
-| 能力 | 处理方式 |
-|------|---------|
-| 支持图片上传 + 文档插入 | 上传图片，生成平台可识别的图片引用 |
-| 只支持本地 Markdown | 使用相对路径或本地路径引用图片 |
-| 支持文档写入但不支持图片上传 | 保留占位说明，提示用户后续手动上传 |
-| 无法确认能力 | 保守处理：保留本地图片路径和占位说明 |
+| 平台 | 图片能力 | 处理方式 |
+|------|---------|---------|
+| **语雀** | `yuque` CLI `--upload-images` | Markdown 中用相对路径引用本地图片（`![](./images/xxx.png)`），CLI 自动上传到语雀图床并替换路径。需 `cd` 到 Markdown 文件所在目录执行。仅支持 Doc 类型，Sheet/HtmlDoc 不支持。MCP API（`skylark_*`）不支持图片上传 |
+| **飞书/钉钉/Notion** | 取决于对应 CLI/MCP | 检测是否支持图片上传 + 文档插入；支持则上传引用，不支持则保留占位说明 |
+| 只支持本地 Markdown | — | 使用相对路径或本地路径引用图片 |
+| 无法确认能力 | — | 保守处理：保留本地图片路径和占位说明 |
+
+**语雀图片上传工作流**：
+
+```
+项目目录/
+  ├── prd/
+  │   ├── PRD_xxx_v1.0.md    ← Markdown 正文
+  │   └── images/
+  │       ├── screenshot.png  ← 正文中引用 ![](./images/screenshot.png)
+  │       └── diagram.png
+```
+
+1. PRD 写作时，截图素材放入 `prd/images/` 目录
+2. Markdown 中用相对路径引用：`![描述](./images/xxx.png)`
+3. 发布时使用 CLI：`cd prd && yuque update doc <namespace>/<slug> --body-file ./PRD_xxx_v1.0.md --upload-images --yes`
+4. CLI 自动完成：解析图片引用 → 上传到语雀图床 → 替换 Markdown 中的本地路径 → 更新文档
 
 ### 第三步：在对应章节处理图片
 
