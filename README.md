@@ -11,7 +11,7 @@ AI PM Skills 是一组产品经理工作流 Skill。它不是单个提示词集�
 - 先做 Demo 验证，再反向沉淀结构化 PRD
 - 在 Codex、Claude Code、CodeFuse 等 Agent CLI 中复用产品工作流
 
-当前包含四个核心 Skill：
+当前包含五个核心 Skill：
 
 | Skill | 解决的问题 | 典型输入 | 典型输出 |
 |---|---|---|---|
@@ -19,6 +19,7 @@ AI PM Skills 是一组产品经理工作流 Skill。它不是单个提示词集�
 | AI Native PD | 从想法到 Demo 的产品工作流 | “我有个想法””帮我验证这个需求” | 需求评估、产品简报、Demo、交付路径 |
 | PRD Writer | 基于已有材料生成结构化 PRD | Demo、原型、方案文档或代码项目 | 结构化 PRD、图表、验收标准、范围说明 |
 | PD Copywriter | 中文产品文案引擎 | “帮我写文案””文案诊断””这个文案怎么改” | UI 交互文案、营销推送文案、说明型文案 |
+| Agent Council | 多 agent / A2A 协作评审 | “找几个 agent 互相挑战并做 QA” | 角色讨论、交叉评估、QA gate、降级说明 |
 
 ## 为什么做这组 Skill
 
@@ -130,6 +131,7 @@ PRD Writer       ← AI Native PD Phase 4
 bash pd-deep-research/publish.sh
 bash ai-native-pd/publish.sh
 bash prd-writer/publish.sh
+bash agent-council/publish.sh
 ```
 
 只安装某一个 Skill：

@@ -1,0 +1,3 @@
+display_name: Agent Council
+short_description: 多 Agent 议事、评审、辩论和 QA 门禁。
+default_prompt: 找几个 agent 从不同角色一起评估这个方案，互相挑战，最后给我一个稳妥结论并说明 QA 是否通过。
