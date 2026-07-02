@@ -1,4 +1,0 @@
-id	backend	model_family	timeout	healthcheck_prompt	expected	command	notes
-codefuse	cli_actor	GLM	300	只回复: OK	OK	cfuse --bare -p	Legacy cross primary actor; Claude Code orchestrator -> CodeFuse actor must preserve this path
-claude-code	cli_actor	Claude	300	只回复: OK	OK	claude -p	Claude Code CLI; command varies by installed version; healthcheck required
-codex-cli	cli_actor	GPT	300	只回复: OK	OK	cfuse --cx exec	Codex engine via cfuse; requires login
