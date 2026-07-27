@@ -26,7 +26,7 @@ prd-writer/
 bash publish.sh
 ```
 
-会将 `skill/` 中的文件复制到指定 Agent CLI skills 安装目录。默认覆盖 Codex / Claude Code / CodeFuse 的已知路径，也可以用 `bash publish.sh custom /path/to/skills/prd-writer` 指定目录。
+会将 `skill/` 中的文件复制到指定 Agent CLI skills 安装目录。默认覆盖 Codex / Claude Code 的已知路径，也可以用 `bash publish.sh custom /path/to/skills/prd-writer` 指定目录。
 
 ## 迭代流程
 

@@ -3,7 +3,7 @@
 ## 项目结构
 
 - `skill/` 是 skill 工作目录，可以随意修改试验
-- 定稿后运行 `bash publish.sh` 发布到已知 Agent CLI skills 安装目录，或用 `bash publish.sh codex|claude|codefuse|custom <path>` 指定目标
+- 定稿后运行 `bash publish.sh` 发布到已知 Agent CLI skills 安装目录，或用 `bash publish.sh codex|claude|custom <path>` 指定目标
 - `iterations/` 记录每轮迭代的改动和决策
 - `outputs/` 存放测试产出物
 

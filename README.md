@@ -9,7 +9,7 @@ AI PM Skills 是一组产品经理工作流 Skill。它不是单个提示词集�
 - 从一个模糊想法开始，澄清用户、场景、问题和产品机会
 - 快速理解一个赛道、竞品、技术方向或市场变化
 - 先做 Demo 验证，再反向沉淀结构化 PRD
-- 在 Codex、Claude Code、CodeFuse 等 Agent CLI 中复用产品工作流
+- 在 Codex、Claude Code 等本地 Agent CLI 中复用产品工作流
 
 当前包含四个核心 Skill：
 
@@ -143,7 +143,6 @@ bash pd-deep-research/publish.sh
 ```bash
 bash prd-writer/publish.sh codex
 bash prd-writer/publish.sh claude
-bash prd-writer/publish.sh codefuse
 ```
 
 发布到自定义路径：

@@ -4,7 +4,6 @@
 #   bash publish.sh              # 发布到 all
 #   bash publish.sh codex        # 仅发布到 Codex
 #   bash publish.sh claude       # 仅发布到 Claude Code
-#   bash publish.sh codefuse     # 仅发布到 CodeFuse
 #   bash publish.sh custom /path/to/skills/ai-native-pd
 
 set -euo pipefail
@@ -19,8 +18,6 @@ case "$TARGET_GROUP" in
     TARGETS=(
       "$HOME/.codex/skills/$SKILL_NAME"
       "$HOME/.claude/skills/$SKILL_NAME"
-      "$HOME/.codefuse/engine/cc/skills/$SKILL_NAME"
-      "$HOME/.codefuse/fuse/skills/$SKILL_NAME"
     )
     ;;
   codex)
@@ -28,12 +25,6 @@ case "$TARGET_GROUP" in
     ;;
   claude)
     TARGETS=("$HOME/.claude/skills/$SKILL_NAME")
-    ;;
-  codefuse)
-    TARGETS=(
-      "$HOME/.codefuse/engine/cc/skills/$SKILL_NAME"
-      "$HOME/.codefuse/fuse/skills/$SKILL_NAME"
-    )
     ;;
   custom)
     if [[ $# -lt 2 ]]; then
@@ -44,7 +35,7 @@ case "$TARGET_GROUP" in
     ;;
   *)
     echo "未知目标: $TARGET_GROUP"
-    echo "可选: all | codex | claude | codefuse | custom <path>"
+    echo "可选: all | codex | claude | custom <path>"
     exit 1
     ;;
 esac
